@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import { RxCross1 } from "react-icons/rx";
 import { useState } from "react";
@@ -6,12 +6,23 @@ import { useContext } from "react";
 import { ThemeContext } from "../ThemeProvider/ThemeContext";
 import { MdOutlineLightMode } from "react-icons/md";
 import { MdDarkMode } from "react-icons/md";
+import { AuthContext } from "../AuthProvider/AuthProvider";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  // const { user, signOutUser, loading } = useContext(AuthContext);
+  const { user, signOutUser, loading } = useContext(AuthContext);
 
   const { theme, toggleTheme } = useContext(ThemeContext);
+
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    navigate('/login');
+  }
+
+  const handleRegister = () => {
+    navigate('/register')
+  }
 
   const navbar = (
     <>
@@ -43,71 +54,38 @@ const Header = () => {
           {navbar}
         </div>
 
-        {/* {user && user?.email || loading === true ? (
+        {(user && user?.email) || loading === true ? (
           <div className="flex gap-2 items-center">
-            <label className="swap swap-rotate">
-              <input
-                type="checkbox"
-                className="toggle toggle-error"
-                checked={theme === "dark"}
-                onChange={toggleTheme}
-              />
-            </label>
-            <div
-              className="w-10 h-10 rounded-full mr-1 cursor-pointer"
-              data-tooltip-id="user-tooltip" 
-            >
+            <div className="w-10 h-10 rounded-full mr-1 cursor-pointer">
               <img
                 className="w-full h-full object-cover rounded-full"
-                src={user?.photoURL} 
+                src={user?.photoURL}
                 alt=""
               />
             </div>
-
-            <Tooltip
-              id="user-tooltip" 
-              place="bottom-end" 
-              effect="solid" 
-              clickable 
-              className="p-2" 
-            >
-              <div className="text-center">
-                <p className="font-semibold">{user?.displayName}</p>
-                <button
-                  onClick={signOutUser}
-                  className="btn bg-my-red text-my-gray"
-                >
-                  Log Out
-                </button>
-              </div>
-            </Tooltip>
           </div>
         ) : (
           <div className="flex gap-2 items-center">
-            <label className="swap swap-rotate">
-              <input
-                type="checkbox"
-                className="toggle toggle-error"
-                checked={theme === "dark"}
-                onChange={toggleTheme}
-              />
-            </label>
-            <NavLink to="/login">Login</NavLink>
+            <button onClick={handleLogin} className="btn btn-sm bg-sky-500 text-black hover:bg-sky-300">
+              Login
+            </button>
             <span className="text-my-red hidden md:block">/</span>
             <span className="hidden md:block">
-              <NavLink to="/register">Register</NavLink>
+              <button onClick={handleRegister} className="btn btn-sm bg-sky-500 text-black hover:bg-sky-300">
+                Register
+              </button>
             </span>
-          </div>
-        )} */}
 
-        <div>
-          <button
-            onClick={toggleTheme}
-            className="p-2 text-2xl text-sky-500"
-          >
-            {theme === "light" ? <MdDarkMode /> : <MdOutlineLightMode />}
-          </button>
-        </div>
+            <div>
+              <button
+                onClick={toggleTheme}
+                className="p-2 text-2xl text-sky-500"
+              >
+                {theme === "light" ? <MdDarkMode /> : <MdOutlineLightMode />}
+              </button>
+            </div>
+          </div>
+        )}
 
         <div
           className={`fixed top-0 left-0 h-full shadow-lg z-50 transform ${
