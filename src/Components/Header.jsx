@@ -4,6 +4,8 @@ import { RxCross1 } from "react-icons/rx";
 import { useState } from "react";
 import { useContext } from "react";
 import { ThemeContext } from "../ThemeProvider/ThemeContext";
+import { MdOutlineLightMode } from "react-icons/md";
+import { MdDarkMode } from "react-icons/md";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -15,16 +17,13 @@ const Header = () => {
     <>
       <NavLink to="/">Home</NavLink>
       <NavLink to="/">Marathons</NavLink>
-      <NavLink to="/">Add New Campaign</NavLink>
-      <NavLink to={`/`}>My Campaign</NavLink>
-      <NavLink to={`/`}>My Donations</NavLink>
     </>
   );
 
   return (
     <div
       className={`fixed top-0 left-0 right-0 z-50 ${
-        theme === "dark" ? "bg-gray-800" : "bg-slate-100"
+        theme === "dark" ? "bg-gray-800" : "bg-slate-200"
       }`}
     >
       <div className="w-11/12 mx-auto flex items-center justify-between py-4">
@@ -102,12 +101,11 @@ const Header = () => {
         )} */}
 
         <div>
-          Header
           <button
             onClick={toggleTheme}
-            className="p-2 dark:bg-[#e0e0e0] rounded"
+            className="p-2 text-2xl text-sky-500"
           >
-            {theme === "light" ? "Dark Mode" : "Light Mode"}
+            {theme === "light" ? <MdDarkMode /> : <MdOutlineLightMode />}
           </button>
         </div>
 
