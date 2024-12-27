@@ -17,17 +17,18 @@ const Header = () => {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    navigate('/login');
-  }
+    navigate("/login");
+  };
 
   const handleRegister = () => {
-    navigate('/register')
-  }
+    navigate("/register");
+  };
 
   const navbar = (
     <>
       <NavLink to="/">Home</NavLink>
       <NavLink to="/">Marathons</NavLink>
+      {user && user?.email && <NavLink to="/">Dashboard</NavLink>}
     </>
   );
 
@@ -56,22 +57,50 @@ const Header = () => {
 
         {(user && user?.email) || loading === true ? (
           <div className="flex gap-2 items-center">
-            <div className="w-10 h-10 rounded-full mr-1 cursor-pointer">
-              <img
-                className="w-full h-full object-cover rounded-full"
-                src={user?.photoURL}
-                alt=""
-              />
+            <div>
+              <button
+                onClick={toggleTheme}
+                className="p-2 text-2xl text-sky-500"
+              >
+                {theme === "light" ? <MdDarkMode /> : <MdOutlineLightMode />}
+              </button>
+            </div>
+            <div className="dropdown dropdown-end">
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn btn-ghost btn-circle avatar"
+              >
+                <div className="w-10 rounded-full">
+                  <img
+                    alt="user"
+                    src={user?.photoURL}
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
+              </div>
+              <ul
+                tabIndex={0}
+                className="menu menu-sm dropdown-content rounded-lg z-[1]"
+              >
+                <button onClick={signOutUser} className="btn bg-sky-500 text-black hover:bg-sky-300">logout</button>
+              </ul>
             </div>
           </div>
         ) : (
           <div className="flex gap-2 items-center">
-            <button onClick={handleLogin} className="btn btn-sm bg-sky-500 text-black hover:bg-sky-300">
+            <button
+              onClick={handleLogin}
+              className="btn btn-sm bg-sky-500 text-black hover:bg-sky-300"
+            >
               Login
             </button>
             <span className="text-my-red hidden md:block">/</span>
             <span className="hidden md:block">
-              <button onClick={handleRegister} className="btn btn-sm bg-sky-500 text-black hover:bg-sky-300">
+              <button
+                onClick={handleRegister}
+                className="btn btn-sm bg-sky-500 text-black hover:bg-sky-300"
+              >
                 Register
               </button>
             </span>

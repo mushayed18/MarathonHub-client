@@ -4,57 +4,52 @@ import { useContext, useState } from "react";
 import { IoEyeOutline } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
+import toast from "react-hot-toast";
 
 const Login = () => {
-  const {
-    createUser,
-    user,
-    setUser,
-    updateUserProfile,
-    signInWithGoogle,
-    loading,
-  } = useContext(AuthContext);
+  const { signInUser, setUser, signInWithGoogle, loading, setLoading } =
+    useContext(AuthContext);
 
   const [visibility, setVisibility] = useState(false);
-
-  const [valid, setValid] = useState("");
-
   const navigate = useNavigate();
 
   const handleToggle = () => {
     setVisibility(!visibility);
   };
 
-  const handleGoogleBtn = () => {
-    signInWithGoogle().then((result) => {
-      setUser(result.user);
-      navigate("/");
-    });
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-    createUser(email, password)
-      .then((result) => {
-        setUser(result.user);
+    try {
+      setLoading(true); 
+      const result = await signInUser(email, password);
+      setUser(result.user);
+      toast.success('Login successful!')
+      navigate("/");
+    } catch (error) {
+      toast.error("There is an error. Please try again!")
+      console.error("Login error:", error.message);
+    } finally {
+      setLoading(false); 
+    }
+  };
 
-        const newUser = { name, email };
-
-        updateUserProfile({ displayName: name, photoURL: photo }).then(() => {
-          navigate("/");
-        });
-      })
-      .catch((error) => {
-        // Swal.fire({
-        //   icon: "error",
-        //   title: "Error",
-        //   text: "This email is already taken. Please try with different one.",
-        // });
-      });
+  const handleGoogleBtn = async () => {
+    try {
+      setLoading(true);
+      const result = await signInWithGoogle();
+      setUser(result.user);
+      toast.success('Login successful!')
+      navigate("/");
+    } catch (error) {
+      toast.error("There is an error. Please try again!")
+      console.error("Google login error:", error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -62,7 +57,7 @@ const Login = () => {
       <div className="bg-sky-500 md:w-2/5 lg:w-1/4 mt-28 md:mb-16 md:rounded-l-lg flex items-center justify-center">
         <h1 className="text-3xl font-bold text-white py-4">Login now!</h1>
       </div>
-      <div className="md:w-2/5 lg:w-1/4 p-6 md:rounded-r-lg shadow-2xl md:mt-28 mb-16 backdrop-blur-2xl bg-white/30">
+      <div className="md:w-2/5 lg:w-1/4 p-6 md:rounded-r-lg shadow-2xl md:mt-28 mb-16 backdrop-blur-2xl dark:bg-white/30 bg-slate-200">
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
           <div>
             <label className="block text-sm font-medium">Email Address</label>
@@ -88,6 +83,7 @@ const Login = () => {
             />
 
             <button
+              type="button"
               onClick={handleToggle}
               className="absolute top-9 right-[1rem]"
             >
@@ -99,9 +95,30 @@ const Login = () => {
             </button>
           </div>
 
-          <button className="btn btn-sm hover:bg-sky-500 w-full">Login</button>
+          <button
+            type="submit"
+            className={`btn btn-sm w-full ${
+              loading ? "cursor-not-allowed" : "hover:bg-sky-500"
+            }`}
+          >
+            {loading ? (
+              <span className="flex items-center justify-center text-sky-500">
+                Logging in...
+                <span className="loading loading-spinner text-info"></span>
+              </span>
+            ) : (
+              "Login"
+            )}
+          </button>
+
           <div className="divider divider-vertical">OR</div>
-          <button onClick={handleGoogleBtn} className="btn btn-sm w-full hover:bg-sky-500">
+          <button
+            type="button"
+            onClick={handleGoogleBtn}
+            className={`btn btn-sm w-full ${
+              loading ? "cursor-not-allowed" : "hover:bg-sky-500"
+            }`}
+          >
             Login with Google <FcGoogle size={20} />
           </button>
         </form>
