@@ -24,16 +24,26 @@ const Login = () => {
     const password = e.target.password.value;
 
     try {
-      setLoading(true); 
+      setLoading(true);
       const result = await signInUser(email, password);
       setUser(result.user);
-      toast.success('Login successful!')
+      toast.success("Login successful!", {
+        style: {
+          background: "#0EA5E9",
+          color: "#FFFFFF",
+        },
+      });
       navigate("/");
     } catch (error) {
-      toast.error("There is an error. Please try again!")
+      toast.error("There is an error. Please try again!", {
+        style: {
+          background: "#0EA5E9",
+          color: "#FFFFFF",
+        },
+      });
       console.error("Login error:", error.message);
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
@@ -42,10 +52,20 @@ const Login = () => {
       setLoading(true);
       const result = await signInWithGoogle();
       setUser(result.user);
-      toast.success('Login successful!')
+      toast.success("Login successful!", {
+        style: {
+          background: "#0EA5E9",
+          color: "#FFFFFF",
+        },
+      });
       navigate("/");
     } catch (error) {
-      toast.error("There is an error. Please try again!")
+      toast.error("There is an error. Please try again!", {
+        style: {
+          background: "#0EA5E9",
+          color: "#FFFFFF",
+        },
+      });
       console.error("Google login error:", error.message);
     } finally {
       setLoading(false);

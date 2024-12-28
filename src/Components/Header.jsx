@@ -7,6 +7,7 @@ import { ThemeContext } from "../ThemeProvider/ThemeContext";
 import { MdOutlineLightMode } from "react-icons/md";
 import { MdDarkMode } from "react-icons/md";
 import { AuthContext } from "../AuthProvider/AuthProvider";
+import { MdArrowDropDown } from "react-icons/md";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -24,11 +25,60 @@ const Header = () => {
     navigate("/register");
   };
 
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
   const navbar = (
     <>
       <NavLink to="/">Home</NavLink>
       <NavLink to="/">Marathons</NavLink>
-      {user && user?.email && <NavLink to="/">Dashboard</NavLink>}
+      {/* {user && user?.email && <NavLink to="/">Dashboard</NavLink>} */}
+
+      {user && user?.email && (
+        <div className="relative inline-block">
+          <button
+            onClick={() => {
+              toggleDropdown()
+            }}
+            className="flex items-center gap-1 hover:text-sky-500"
+          >
+            Dashboard
+            <span className={isDropdownOpen ? "rotate-0" : "-rotate-90"}>
+              <MdArrowDropDown />
+            </span>
+          </button>
+          {isDropdownOpen && (
+            <div
+              className={`fixed shadow-lg z-50 transform transition-transform duration-300 backdrop-blur-lg bg-white/30 text-black`}
+            >
+              <NavLink
+                to="/add-marathon"
+                className="block px-4 py-2 hover:bg-gray-100"
+                onClick={() => setIsDropdownOpen(false)}
+              >
+                Add Marathon
+              </NavLink>
+              <NavLink
+                to="/"
+                className="block px-4 py-2 hover:bg-gray-100"
+                onClick={() => setIsDropdownOpen(false)}
+              >
+                My Marathon List
+              </NavLink>
+              <NavLink
+                to="/"
+                className="block px-4 py-2 hover:bg-gray-100"
+                onClick={() => setIsDropdownOpen(false)}
+              >
+                My Apply List
+              </NavLink>
+            </div>
+          )}
+        </div>
+      )}
     </>
   );
 
@@ -83,7 +133,12 @@ const Header = () => {
                 tabIndex={0}
                 className="menu menu-sm dropdown-content rounded-lg z-[1]"
               >
-                <button onClick={signOutUser} className="btn bg-sky-500 text-black hover:bg-sky-300">logout</button>
+                <button
+                  onClick={signOutUser}
+                  className="btn bg-sky-500 text-black hover:bg-sky-300"
+                >
+                  logout
+                </button>
               </ul>
             </div>
           </div>
@@ -134,7 +189,6 @@ const Header = () => {
               </div>
             </div>
             <nav
-              onClick={() => setIsMobileMenuOpen(false)}
               className="flex flex-col gap-4"
             >
               {navbar}

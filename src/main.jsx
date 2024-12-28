@@ -9,6 +9,7 @@ import ThemeProvider from "./ThemeProvider/ThemeContext.jsx";
 import AuthProvider from "./AuthProvider/AuthProvider.jsx";
 import Login from "./Pages/Login/Login.jsx";
 import Register from "./Pages/Register/Register.jsx";
+import AddMarathon from "./Pages/AddMarathon/AddMarathon.jsx";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register></Register>,
+      },
+      {
+        path: "/add-marathon",
+        element: <AddMarathon></AddMarathon>,
       },
     ],
   },

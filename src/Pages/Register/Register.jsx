@@ -202,10 +202,20 @@ const Register = () => {
       });
 
       setUser(newUser);
-      toast.success('User has been created successfully!')
+      toast.success('User has been created successfully!', {
+        style: {
+          background: "#0EA5E9",
+          color: "#FFFFFF",
+        },
+      })
       navigate("/");
     } catch (error) {
-      toast.error('There is an error, please try again!')
+      toast.error('There is an error, please try again!', {
+        style: {
+          background: "#0EA5E9",
+          color: "#FFFFFF",
+        },
+      })
       console.error("Error during registration:", error);
     } finally {
       setLocalLoading(false);
@@ -217,10 +227,20 @@ const Register = () => {
       setLocalLoading(true);
       const result = await signInWithGoogle();
       setUser(result.user);
-      toast.success('User has been created successfully!')
+      toast.success('User has been created successfully!', {
+        style: {
+          background: "#0EA5E9",
+          color: "#FFFFFF",
+        },
+      })
       navigate("/");
     } catch (error) {
-      toast.error('There is an error, please try again!')
+      toast.error('There is an error, please try again!', {
+        style: {
+          background: "#0EA5E9",
+          color: "#FFFFFF",
+        },
+      })
       console.error("Error during Google sign-in:", error);
     } finally {
       setLocalLoading(false);
