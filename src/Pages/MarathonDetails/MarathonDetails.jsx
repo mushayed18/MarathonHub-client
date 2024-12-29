@@ -1,14 +1,17 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Loading from "../../Components/Loading";
 import ErrorPage from "../ErrorPage/ErrorPage";
+import { format } from "date-fns";
 
 const MarathonDetails = () => {
   const { id } = useParams();
   const [marathon, setMarathon] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchMarathonDetails = async () => {
@@ -38,7 +41,7 @@ const MarathonDetails = () => {
   return (
     <div className="pt-28 pb-10 px-10">
       {marathon && (
-        <div className="max-w-4xl mx-auto p-6 rounded shadow-2xl backdrop-blur-lg dark:bg-white/30 bg-slate-200">
+        <div className="max-w-4xl mx-auto p-6 rounded shadow-2xl backdrop-blur-lg dark:bg-white/30 bg-slate-300">
           <div className="md:flex items-center gap-4">
             <div className="w-full md:w-1/2">
               <img
@@ -57,32 +60,23 @@ const MarathonDetails = () => {
                 <span className="text-sky-500">{marathon.location}</span>
               </p>
               <p>
-                <strong>Registration:</strong>
+                <strong>Registration: </strong>
                 <span className="text-sky-500">
-                  {" "}
-                  {new Date(marathon.startRegistrationDate).toLocaleDateString(
-                    "en-GB"
+                  {format(
+                    new Date(marathon.startRegistrationDate),
+                    "dd-MM-yyyy"
                   )}
-                </span>{" "}
-                -
+                </span>
+                {" - "}
                 <span className="text-sky-500">
-                  {" "}
-                  {new Date(marathon.endRegistrationDate).toLocaleDateString(
-                    "en-GB"
-                  )}
+                  {format(new Date(marathon.endRegistrationDate), "dd-MM-yyyy")}
                 </span>
               </p>
               <p>
                 <strong>Marathon Start Date:</strong>{" "}
                 <span className="text-sky-500">
-                  {new Date(marathon.marathonStartDate).toLocaleDateString(
-                    "en-GB"
-                  )}
+                  {format(new Date(marathon.marathonStartDate), "dd-MM-yyyy")}
                 </span>
-              </p>
-              <p>
-                <strong>Description:</strong>{" "}
-                <span className="text-sky-500">{marathon.description}</span>
               </p>
               <p>
                 <strong>Total Registrations:</strong>{" "}
@@ -94,8 +88,8 @@ const MarathonDetails = () => {
               {new Date() >= new Date(marathon.startRegistrationDate) &&
               new Date() <= new Date(marathon.endRegistrationDate) ? (
                 <button
-                  className="mt-4 py-2 px-4 bg-sky-500 text-white rounded hover:bg-sky-600"
-                  onClick={() => navigate(`/register/${marathon._id}`)}
+                  className="hidden md:block btn bg-sky-500 text-gray-800 hover:bg-sky-300"
+                  onClick={() => navigate(`/marathons/${marathon._id}/register`)}
                 >
                   Register
                 </button>
@@ -103,6 +97,17 @@ const MarathonDetails = () => {
                 <p className="mt-4 text-red-500">Registration is closed.</p>
               )}
             </div>
+          </div>
+
+          <div className="flex flex-col items-center gap-2 mt-4">
+            <p className="text-2xl font-bold text-sky-500">Description</p>
+            <p>{marathon.description}</p>
+            <button
+              className="md:hidden w-full btn bg-sky-500 text-gray-800 hover:bg-sky-300"
+              onClick={() => navigate(`/marathons/${marathon._id}/register`)}
+            >
+              Register
+            </button>
           </div>
         </div>
       )}
