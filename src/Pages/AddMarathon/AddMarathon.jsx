@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import axios from "axios";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
+import toast from "react-hot-toast";
+
 
 const AddMarathon = () => {
   const navigate = useNavigate();
@@ -9,10 +13,13 @@ const AddMarathon = () => {
   const [endRegistrationDate, setEndRegistrationDate] = useState(null);
   const [marathonStartDate, setMarathonStartDate] = useState(null);
 
-  const handleAddMarathon = (e) => {
+  const {user} = useContext(AuthContext);
+  const {displayName, email} = user;
+
+  const handleAddMarathon = async (e) => {
     e.preventDefault();
     const form = e.target;
-
+  
     const title = form.title.value;
     const location = form.location.value;
     const runningDistance = form.runningDistance.value;
@@ -20,7 +27,7 @@ const AddMarathon = () => {
     const marathonImage = form.marathonImage.value;
     const createdAt = new Date();
     const totalRegistrationCount = 0;
-
+  
     const marathonData = {
       title,
       startRegistrationDate,
@@ -32,28 +39,33 @@ const AddMarathon = () => {
       marathonImage,
       createdAt,
       totalRegistrationCount,
+      displayName,
+      email
     };
-
-    // Example: send data to the backend
-    // fetch("https://your-backend-api.com/marathons", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(marathonData),
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     console.log("Marathon added successfully:", data);
-    //     // Navigate to another page or show success message
-    //     navigate("/dashboard");
-    //   })
-    //   .catch((err) => console.error("Error adding marathon:", err));
+  
+    try {
+      const response = await axios.post("http://localhost:5000/marathons", marathonData);
+      if (response.data.insertedId) {
+        console.log("Marathon added successfully:", response.data);
+        toast.success("Event added successfully!", {
+          style: {
+            background: "#0EA5E9",
+            color: "#FFFFFF",
+          },
+        });
+        // navigate("/dashboard");
+      } else {
+        console.error("Failed to add marathon:", response.data);
+      }
+    } catch (error) {
+      console.error("Error adding marathon:", error);
+    }
   };
+  
 
   return (
     <div className="pt-10">
-      <div className="w-11/12 lg:max-w-3xl md:max-w-2xl mx-auto mb-10 mt-16 p-6 rounded shadow-2xl backdrop-blur-lg bg-white/30">
+      <div className="w-11/12 lg:max-w-3xl md:max-w-2xl mx-auto mb-10 mt-16 p-6 rounded shadow-2xl backdrop-blur-lg dark:bg-white/30 bg-slate-200">
         <h1 className="text-2xl font-bold mb-4 text-center">Add Marathon</h1>
         <form onSubmit={handleAddMarathon} className="space-y-4">
           <div>
@@ -62,7 +74,7 @@ const AddMarathon = () => {
               type="text"
               name="title"
               placeholder="Enter marathon title"
-              className="w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
+              className="text-sky-500 w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
               required
             />
           </div>
@@ -75,7 +87,7 @@ const AddMarathon = () => {
               <DatePicker
                 selected={startRegistrationDate}
                 onChange={(date) => setStartRegistrationDate(date)}
-                className="w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
+                className="text-sky-500 w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
                 dateFormat="dd-MM-yyyy"
                 required
               />
@@ -88,7 +100,7 @@ const AddMarathon = () => {
               <DatePicker
                 selected={endRegistrationDate}
                 onChange={(date) => setEndRegistrationDate(date)}
-                className="w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
+                className="text-sky-500 w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
                 dateFormat="dd-MM-yyyy"
                 required
               />
@@ -101,7 +113,7 @@ const AddMarathon = () => {
               <DatePicker
                 selected={marathonStartDate}
                 onChange={(date) => setMarathonStartDate(date)}
-                className="w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
+                className="text-sky-500 w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
                 dateFormat="dd-MM-yyyy"
                 required
               />
@@ -114,7 +126,7 @@ const AddMarathon = () => {
               type="text"
               name="location"
               placeholder="Enter location"
-              className="w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
+              className="text-sky-500 w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
               required
             />
           </div>
@@ -125,7 +137,7 @@ const AddMarathon = () => {
             </label>
             <select
               name="runningDistance"
-              className="w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
+              className="text-sky-500 w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
               required
             >
               <option value="" disabled selected>
@@ -142,7 +154,7 @@ const AddMarathon = () => {
             <textarea
               name="description"
               placeholder="Enter a brief description"
-              className="w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
+              className="text-sky-500 w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
               rows="1"
               required
             ></textarea>
@@ -156,8 +168,34 @@ const AddMarathon = () => {
               type="url"
               name="marathonImage"
               placeholder="Enter image URL"
-              className="w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
+              className="text-sky-500 w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
               required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium">
+              Username
+            </label>
+            <input
+              type="text"
+              name="name"
+              placeholder={displayName}
+              className="text-sky-500 w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
+              disabled
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium">
+              User Email
+            </label>
+            <input
+              type="email"
+              name="email"
+              placeholder={email}
+              className="text-sky-500 w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
+              disabled
             />
           </div>
 

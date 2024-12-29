@@ -34,8 +34,7 @@ const Header = () => {
   const navbar = (
     <>
       <NavLink to="/">Home</NavLink>
-      <NavLink to="/">Marathons</NavLink>
-      {/* {user && user?.email && <NavLink to="/">Dashboard</NavLink>} */}
+      <NavLink to="/marathons">Marathons</NavLink>
 
       {user && user?.email && (
         <div className="relative inline-block">

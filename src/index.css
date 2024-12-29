@@ -4,3 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
+a.active {
+  color: #0EA5E9;
+}
