@@ -1,15 +1,19 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import Loading from "../../Components/Loading";
 import ErrorPage from "../ErrorPage/ErrorPage";
 import { format } from "date-fns";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const MarathonDetails = () => {
   const { id } = useParams();
   const [marathon, setMarathon] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const [hasRegistered, setHasRegistered] = useState(false);
+  const {user} = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -29,6 +33,23 @@ const MarathonDetails = () => {
 
     fetchMarathonDetails();
   }, [id]);
+
+
+  useEffect(() => {
+    if (user) {
+      axios
+        .get(`http://localhost:5000/registrations/${user.email}`)
+        .then((response) => {
+          const alreadyRegistered = response.data.some(
+            (reg) => reg.marathonId === id
+          );
+          setHasRegistered(alreadyRegistered);
+        })
+        .catch(() => {
+          setHasRegistered(false);
+        });
+    }
+  }, [user, id]);
 
   if (isLoading) {
     return <Loading></Loading>;
@@ -91,7 +112,7 @@ const MarathonDetails = () => {
                   className="hidden md:block btn bg-sky-500 text-gray-800 hover:bg-sky-300"
                   onClick={() => navigate(`/marathons/${marathon._id}/register`)}
                 >
-                  Register
+                  {hasRegistered ? "Already Registered" : "Register"}
                 </button>
               ) : (
                 <p className="mt-4 text-red-500">Registration is closed.</p>
@@ -106,7 +127,7 @@ const MarathonDetails = () => {
               className="md:hidden w-full btn bg-sky-500 text-gray-800 hover:bg-sky-300"
               onClick={() => navigate(`/marathons/${marathon._id}/register`)}
             >
-              Register
+              {hasRegistered ? "Already Registered" : "Register"}
             </button>
           </div>
         </div>

@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import Loading from "../../Components/Loading";
+import toast from "react-hot-toast";
 
 const Registration = () => {
   const { id } = useParams();
@@ -58,16 +59,21 @@ const Registration = () => {
       );
 
       if (response.data.success) {
-        alert("Registration successful!");
-        // navigate("/dashboard/my-apply");
+        toast.success("Your registration is successful!", {
+          style: {
+            background: "#0EA5E9",
+            color: "#FFFFFF",
+          },
+        });
+        navigate("/my-apply-list");
       }
     } catch (error) {
-      if (error.response && error.response.status === 400) {
-        // Handle duplicate registration error
-        alert(error.response.data.message);
-      } else {
-        alert("Registration failed. Please try again.");
-      }
+      toast.error("There is an error please try again!", {
+        style: {
+          background: "#0EA5E9",
+          color: "#FFFFFF",
+        },
+      });
     }
   };
 
@@ -76,88 +82,87 @@ const Registration = () => {
   }
 
   return (
-    <div className="pt-28 pb-10 px-10">
-      <h1 className="text-3xl font-bold text-sky-500">Register for Marathon</h1>
-      <form onSubmit={handleSubmit} className="mt-8 space-y-4">
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={user?.email}
-            readOnly
-            className="input input-bordered w-full"
-          />
-        </div>
-        <div>
-          <label>Marathon Title:</label>
-          <input
-            type="text"
-            value={marathon?.title}
-            readOnly
-            className="input input-bordered w-full"
-          />
-        </div>
-        <div>
-          <label>Start Date:</label>
-          <input
-            type="text"
-            value={new Date(
-              marathon?.startRegistrationDate
-            ).toLocaleDateString()}
-            readOnly
-            className="input input-bordered w-full"
-          />
-        </div>
-        <div>
-          <label>First Name:</label>
-          <input
-            type="text"
-            name="firstName"
-            placeholder="First Name"
-            required
-            className="input input-bordered w-full"
-          />
-        </div>
-        <div>
-          <label>Last Name:</label>
-          <input
-            type="text"
-            name="lastName"
-            placeholder="Last Name"
-            required
-            className="input input-bordered w-full"
-          />
-        </div>
-        <div>
-          <label>Contact Number:</label>
-          <input
-            type="tel"
-            name="contactNumber"
-            placeholder="Contact Number"
-            required
-            className="input input-bordered w-full"
-          />
-        </div>
-        <div>
-          <label>Age:</label>
-          <input
-            type="number"
-            name="age"
-            placeholder="Age"
-            required
-            className="input input-bordered w-full"
-          />
-        </div>
-        <button
-          type="submit"
-          disabled={hasRegistered}
-          className={`btn ${
-            hasRegistered ? "bg-gray-400" : "bg-sky-500"
-          } w-full`}
-        >
-          {hasRegistered ? "Already Registered" : "Submit Registration"}
-        </button>
-      </form>
+    <div className="pt-10">
+      <div className="flex flex-col items-center w-11/12 lg:max-w-3xl md:max-w-2xl mx-auto mb-10 mt-16 p-6 rounded shadow-2xl backdrop-blur-lg dark:bg-white/30 bg-slate-300">
+        <h1 className="text-center text-3xl font-bold text-sky-500">
+          Register for Marathon
+        </h1>
+        <form onSubmit={handleSubmit} className="mt-8 space-y-4 ">
+          <div className="grid md:grid-cols-2 gap-2">
+            <div>
+              <input
+                type="email"
+                value={user?.email}
+                readOnly
+                className="text-sky-500 w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
+              />
+            </div>
+            <div>
+              <input
+                type="text"
+                value={marathon?.title}
+                readOnly
+                className="text-sky-500 w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
+              />
+            </div>
+            <div>
+              <input
+                type="text"
+                value={new Date(
+                  marathon?.startRegistrationDate
+                ).toLocaleDateString()}
+                readOnly
+                className="text-sky-500 w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
+              />
+            </div>
+            <div>
+              <input
+                type="text"
+                name="firstName"
+                placeholder="First Name"
+                required
+                className="text-sky-500 w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
+              />
+            </div>
+            <div>
+              <input
+                type="text"
+                name="lastName"
+                placeholder="Last Name"
+                required
+                className="text-sky-500 w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
+              />
+            </div>
+            <div>
+              <input
+                type="tel"
+                name="contactNumber"
+                placeholder="Contact Number"
+                required
+                className="text-sky-500 w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
+              />
+            </div>
+            <div>
+              <input
+                type="number"
+                name="age"
+                placeholder="Age"
+                required
+                className="text-sky-500 w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={hasRegistered}
+              className={`btn mt-6 text-gray-800 hover:bg-sky-300 ${
+                hasRegistered ? "bg-gray-400" : "bg-sky-500"
+              } w-full`}
+            >
+              {hasRegistered ? "Already Registered" : "Submit Registration"}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
