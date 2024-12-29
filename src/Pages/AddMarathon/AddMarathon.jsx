@@ -53,7 +53,7 @@ const AddMarathon = () => {
             color: "#FFFFFF",
           },
         });
-        // navigate("/dashboard");
+        navigate("/marathons");
       } else {
         console.error("Failed to add marathon:", response.data);
       }

@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
 
 const MarathonCard = ({ marathon }) => {
   const {
@@ -7,7 +8,14 @@ const MarathonCard = ({ marathon }) => {
     startRegistrationDate,
     endRegistrationDate,
     marathonImage,
+    _id
   } = marathon;
+
+  const navigate = useNavigate();
+
+  const seeDetails = (_id) => {
+    navigate(`/marathons/${_id}`);
+  }
 
   return (
     <div className="max-w-xs mx-auto bg-slate-200 dark:bg-gray-800 shadow-md rounded-md overflow-hidden hover:border hover:border-sky-500">
@@ -31,7 +39,7 @@ const MarathonCard = ({ marathon }) => {
             </span>
           </p>
         </div>
-        <button className="btn w-full bg-sky-500 text-gray-800 hover:bg-sky-300 mt-4">
+        <button onClick={() => seeDetails(_id)} className="btn w-full bg-sky-500 text-gray-800 hover:bg-sky-300 mt-4">
           See Details
         </button>
       </div>
