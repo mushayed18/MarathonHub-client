@@ -127,7 +127,7 @@ const MyApplyList = () => {
               <th className="border border-gray-300 px-4 py-2">
                 Marathon Title
               </th>
-              <th className="border border-gray-300 px-4 py-2">Start Date</th>
+              <th className="border border-gray-300 px-4 py-2">Marathon start Date</th>
               <th className="border border-gray-300 px-4 py-2">Actions</th>
             </tr>
           </thead>

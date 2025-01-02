@@ -34,8 +34,12 @@ const MyMarathonsList = () => {
     const updatedMarathon = {
       title: form.title.value,
       location: form.location.value,
-      startDate: form.startDate.value,
-      endRegistrationDate: form.endRegistrationDate.value,
+      startDate: form.startDate.value
+        ? new Date(form.startDate.value).toISOString()
+        : null,
+      endRegistrationDate: form.endRegistrationDate.value
+        ? new Date(form.endRegistrationDate.value).toISOString()
+        : null,
       runningDistance: form.runningDistance.value,
       marathonImage: form.marathonImage.value,
       description: form.description.value,
@@ -84,7 +88,11 @@ const MyMarathonsList = () => {
           .delete(`http://localhost:5000/marathons/${id}`)
           .then((response) => {
             if (response.data.success) {
-              Swal.fire("Deleted!", "Your marathon has been deleted.", "success");
+              Swal.fire(
+                "Deleted!",
+                "Your marathon has been deleted.",
+                "success"
+              );
 
               setMarathons((prev) =>
                 prev.filter((marathon) => marathon._id !== id)
@@ -125,7 +133,7 @@ const MyMarathonsList = () => {
               </tr>
             </thead>
             <tbody>
-              {marathons.map((marathon) => (
+              {marathons.map((marathon, index) => (
                 <tr key={marathon._id}>
                   <td className="border text-center border-gray-300 px-4 py-2">
                     {marathon.title}
@@ -158,10 +166,11 @@ const MyMarathonsList = () => {
         </div>
       )}
 
-      {/* Modal */}
       <dialog id="marathon_modal" className="modal">
         <div className="modal-box bg-slate-200 dark:bg-gray-800">
-          <h3 className="font-bold text-2xl text-center text-sky-500 mb-6">Update Marathon</h3>
+          <h3 className="font-bold text-2xl text-center text-sky-500 mb-6">
+            Update Marathon
+          </h3>
           <form onSubmit={handleUpdate} className="flex flex-col gap-4">
             <div>
               <label className="block text-sm font-medium">Title</label>
@@ -182,34 +191,42 @@ const MyMarathonsList = () => {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium">Start Date</label>
+              <label className="block text-sm font-medium">Marathon start Date</label>
               <input
                 type="date"
                 className="text-sky-500 w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
-                defaultValue={selectedMarathon?.startDate || ""}
+                defaultValue={selectedMarathon?.startDate?.split("T")[0] || ""}
                 name="startDate"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium">End Registration Date</label>
+              <label className="block text-sm font-medium">
+                End Registration Date
+              </label>
               <input
                 type="date"
                 className="text-sky-500 w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
-                defaultValue={selectedMarathon?.endRegistrationDate || ""}
+                defaultValue={
+                  selectedMarathon?.endRegistrationDate?.split("T")[0] || ""
+                }
                 name="endRegistrationDate"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium">Running Distance (km)</label>
+              <label className="block text-sm font-medium">
+                Running Distance (km)
+              </label>
               <input
-                type="number"
+                type="text"
                 className="text-sky-500 w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
                 defaultValue={selectedMarathon?.runningDistance || ""}
                 name="runningDistance"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium">Marathon Image URL</label>
+              <label className="block text-sm font-medium">
+                Marathon Image URL
+              </label>
               <input
                 type="url"
                 className="text-sky-500 w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"

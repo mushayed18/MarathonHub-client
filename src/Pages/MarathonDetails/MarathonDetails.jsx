@@ -13,7 +13,7 @@ const MarathonDetails = () => {
   const [error, setError] = useState(null);
 
   const [hasRegistered, setHasRegistered] = useState(false);
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -33,7 +33,6 @@ const MarathonDetails = () => {
 
     fetchMarathonDetails();
   }, [id]);
-
 
   useEffect(() => {
     if (user) {
@@ -110,10 +109,16 @@ const MarathonDetails = () => {
               new Date() <= new Date(marathon.endRegistrationDate) ? (
                 <button
                   className="hidden md:block btn bg-sky-500 text-gray-800 hover:bg-sky-300"
-                  onClick={() => navigate(`/marathons/${marathon._id}/register`)}
+                  onClick={() =>
+                    navigate(`/marathons/${marathon._id}/register`)
+                  }
                 >
                   {hasRegistered ? "Already Registered" : "Register"}
                 </button>
+              ) : new Date() <= new Date(marathon.startRegistrationDate) ? (
+                <p className="text-pink-500">
+                  The registration has not started yet!
+                </p>
               ) : (
                 <p className="mt-4 text-red-500">Registration is closed.</p>
               )}

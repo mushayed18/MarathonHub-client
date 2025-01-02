@@ -8,14 +8,15 @@ const MarathonCard = ({ marathon }) => {
     startRegistrationDate,
     endRegistrationDate,
     marathonImage,
-    _id
+    _id,
+    displayName,
   } = marathon;
 
   const navigate = useNavigate();
 
   const seeDetails = (_id) => {
     navigate(`/marathons/${_id}`);
-  }
+  };
 
   return (
     <div className="max-w-xs mx-auto bg-slate-200 dark:bg-gray-800 shadow-md rounded-md overflow-hidden hover:border hover:border-sky-500">
@@ -26,7 +27,21 @@ const MarathonCard = ({ marathon }) => {
       />
       <div className="p-4">
         <h3 className="text-lg font-semibold">{title}</h3>
-        <p className="text-sm text-gray-500">Location: {location}</p>
+        {new Date() <= new Date(endRegistrationDate) && new Date() >= new Date(startRegistrationDate) ? (
+          <div className="badge badge-secondary badge-outline my-3 py-3">
+            Ongoing
+          </div>
+        ) : new Date() < new Date(startRegistrationDate) ? (
+          <div className="badge border border-sky-500 text-sky-500 my-3 py-3">
+            Upcoming
+          </div>
+        ) : (
+          <div className="badge badge-outline my-3 py-3 text-red-500">
+            Finished
+          </div>
+        )}
+        <p className="text-sm text-gray-500">Created By: {displayName}</p>
+        <p className="text-sm text-gray-500 mt-2">Location: {location}</p>
         <div className="text-sm text-gray-500 mt-2">
           <p>
             Registration:{" "}
@@ -39,7 +54,10 @@ const MarathonCard = ({ marathon }) => {
             </span>
           </p>
         </div>
-        <button onClick={() => seeDetails(_id)} className="btn w-full bg-sky-500 text-gray-800 hover:bg-sky-300 mt-4">
+        <button
+          onClick={() => seeDetails(_id)}
+          className="btn w-full bg-sky-500 text-gray-800 hover:bg-sky-300 mt-4"
+        >
           See Details
         </button>
       </div>

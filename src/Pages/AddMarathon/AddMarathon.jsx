@@ -6,20 +6,19 @@ import axios from "axios";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
 
-
 const AddMarathon = () => {
   const navigate = useNavigate();
   const [startRegistrationDate, setStartRegistrationDate] = useState(null);
   const [endRegistrationDate, setEndRegistrationDate] = useState(null);
   const [marathonStartDate, setMarathonStartDate] = useState(null);
 
-  const {user} = useContext(AuthContext);
-  const {displayName, email} = user;
+  const { user } = useContext(AuthContext);
+  const { displayName, email } = user;
 
   const handleAddMarathon = async (e) => {
     e.preventDefault();
     const form = e.target;
-  
+
     const title = form.title.value;
     const location = form.location.value;
     const runningDistance = form.runningDistance.value;
@@ -27,7 +26,7 @@ const AddMarathon = () => {
     const marathonImage = form.marathonImage.value;
     const createdAt = new Date();
     const totalRegistrationCount = 0;
-  
+
     const marathonData = {
       title,
       startRegistrationDate,
@@ -40,11 +39,35 @@ const AddMarathon = () => {
       createdAt,
       totalRegistrationCount,
       displayName,
-      email
+      email,
     };
-  
+
+
+    const normalizeDate = (date) => {
+      const newDate = new Date(date);
+      newDate.setHours(0, 0, 0, 0); 
+      return newDate;
+    };
+
+    if (
+      new Date(startRegistrationDate) < normalizeDate(new Date()) ||
+      new Date(endRegistrationDate) <= new Date(startRegistrationDate) ||
+      new Date(marathonStartDate) <= new Date(endRegistrationDate)
+    ) {
+      toast.error("Please enter a valid date! Registration deadline should be greater than the registration start date! Marathon start date should be greater than the deadline!", {
+        style: {
+          background: "#0EA5E9",
+          color: "#FFFFFF",
+        },
+      });
+      return;
+    }
+
     try {
-      const response = await axios.post("http://localhost:5000/marathons", marathonData);
+      const response = await axios.post(
+        "http://localhost:5000/marathons",
+        marathonData
+      );
       if (response.data.insertedId) {
         console.log("Marathon added successfully:", response.data);
         toast.success("Event added successfully!", {
@@ -61,7 +84,6 @@ const AddMarathon = () => {
       console.error("Error adding marathon:", error);
     }
   };
-  
 
   return (
     <div className="pt-10">
@@ -174,9 +196,7 @@ const AddMarathon = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium">
-              Username
-            </label>
+            <label className="block text-sm font-medium">Username</label>
             <input
               type="text"
               name="name"
@@ -187,9 +207,7 @@ const AddMarathon = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium">
-              User Email
-            </label>
+            <label className="block text-sm font-medium">User Email</label>
             <input
               type="email"
               name="email"
