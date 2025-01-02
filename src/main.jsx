@@ -14,6 +14,7 @@ import Marathons from "./Pages/Marathons/Marathons.jsx";
 import MarathonDetails from "./Pages/MarathonDetails/MarathonDetails.jsx";
 import Registration from "./Pages/Registration/Registration.jsx";
 import MyApplyList from "./Pages/MyApplyList/MyApplyList.jsx";
+import MyMarathonList from "./Pages/MyMarathonList/MyMarathonList.jsx";
 
 const router = createBrowserRouter([
   {
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
       {
         path: "/my-apply-list",
         element: <MyApplyList></MyApplyList>,
+      },
+      {
+        path: "/my-marathon-list",
+        element: <MyMarathonList></MyMarathonList>,
       },
     ],
   },
