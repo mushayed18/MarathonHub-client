@@ -5,6 +5,7 @@ import Loading from "../../Components/Loading";
 import ErrorPage from "../ErrorPage/ErrorPage";
 import { format } from "date-fns";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
+import MarathonCountdown from "./MarathonCountDown";
 
 const MarathonDetails = () => {
   const { id } = useParams();
@@ -58,10 +59,12 @@ const MarathonDetails = () => {
     return <ErrorPage></ErrorPage>;
   }
 
+  const countdownEndDate = new Date(marathon?.marathonStartDate);
+
   return (
-    <div className="pt-28 pb-10 px-10">
+    <div className="pt-28 pb-10">
       {marathon && (
-        <div className="max-w-4xl mx-auto p-6 rounded shadow-2xl backdrop-blur-lg dark:bg-white/30 bg-slate-300">
+        <div className="w-full md:max-w-2xl lg:max-w-3xl mx-auto p-6 rounded shadow-2xl backdrop-blur-lg dark:bg-white/30 bg-slate-300">
           <div className="md:flex items-center gap-4">
             <div className="w-full md:w-1/2">
               <img
@@ -137,6 +140,10 @@ const MarathonDetails = () => {
           </div>
         </div>
       )}
+
+      <MarathonCountdown
+        countdownEndDate={countdownEndDate}
+      ></MarathonCountdown>
     </div>
   );
 };

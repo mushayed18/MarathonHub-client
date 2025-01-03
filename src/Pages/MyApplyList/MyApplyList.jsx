@@ -251,7 +251,7 @@ const MyApplyList = () => {
           </table>
         </div>
       ) : (
-        <div className="h-72 flex items-center text-2xl font-bold text-sky-500">
+        <div className="h-72 flex border-2 p-6 items-center text-2xl font-bold text-sky-500">
           No data found!
         </div>
       )}
