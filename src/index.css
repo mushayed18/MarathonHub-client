@@ -5,5 +5,36 @@
 @tailwind utilities;
 
 a.active {
-  color: #0EA5E9;
+  color: #0ea5e9;
+}
+
+.custom-popup {
+  background-color: #1F2937; 
+  color: #0EA5E9; 
+  border-radius: 8px;
+}
+
+.custom-title {
+  color: #0EA5E9; 
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.custom-cancel-button {
+  background-color: none;
+  color: #1F2937;
+  border: 1px;
+  border-color: #0EA5E9;
+  border-radius: 5px;
+}
+
+.custom-confirm-button {
+  background-color: #0EA5E9; 
+  color: #1F2937;
+  border-radius: 5px;
+}
+
+.custom-popup-success {
+  background-color: #1F2937; 
+  color: #0EA5E9; 
 }

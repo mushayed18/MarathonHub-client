@@ -6,12 +6,15 @@ import { FiEdit } from "react-icons/fi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { format } from "date-fns";
 import Swal from "sweetalert2";
+import toast from "react-hot-toast";
+import { CiSearch } from "react-icons/ci";
 
 const MyApplyList = () => {
   const { user } = useContext(AuthContext);
   const [registrations, setRegistrations] = useState([]);
   const [selectedRegistration, setSelectedRegistration] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     if (user) {
@@ -50,7 +53,12 @@ const MyApplyList = () => {
       )
       .then((response) => {
         if (response.data.success) {
-          Swal.fire("Success", "Registration updated successfully", "success");
+          toast.success("Your registration updated successfully", {
+            style: {
+              background: "#0EA5E9",
+              color: "#FFFFFF",
+            },
+          });
 
           setRegistrations((prev) =>
             prev.map((reg) =>
@@ -62,54 +70,103 @@ const MyApplyList = () => {
 
           closeModal();
         } else {
-          Swal.fire("Error", response.data.message, "error");
+          toast.error("Oops! There is an error. Please try again.", {
+            style: {
+              background: "#0EA5E9",
+              color: "#FFFFFF",
+            },
+          });
+
+          closeModal();
         }
       })
       .catch((error) => {
-        console.error("Failed to update registration:", error);
-        Swal.fire("Error", "Failed to update registration", "error");
+        toast.error("Oops! There is an error. Please try again.", {
+          style: {
+            background: "#0EA5E9",
+            color: "#FFFFFF",
+          },
+        });
+
+        closeModal();
       });
   };
 
-  // Handle Delete Functionality
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
+      customClass: {
+        popup: "custom-popup",
+        title: "custom-title",
+        cancelButton: "custom-cancel-button",
+        confirmButton: "custom-confirm-button",
+      },
     }).then((result) => {
       if (result.isConfirmed) {
         axios
           .delete(`http://localhost:5000/registrations/${id}`)
           .then((response) => {
             if (response.data.success) {
-              Swal.fire(
-                "Deleted!",
-                "Your registration has been deleted.",
-                "success"
-              );
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your marathon has been deleted.",
+                icon: "success",
+                background: "#1F2937",
+                color: "#0EA5E9",
+                iconColor: "#0EA5E9",
+                confirmButtonColor: "#0EA5E9",
+              });
 
-              // Remove the deleted registration from the state
-              setRegistrations((prev) =>
-                prev.filter((reg) => reg._id !== id)
-              );
+              setRegistrations((prev) => prev.filter((reg) => reg._id !== id));
             } else {
-              Swal.fire("Error", response.data.message, "error");
+              toast.error("Failed to delete registration.", {
+                style: {
+                  background: "#0EA5E9",
+                  color: "#FFFFFF",
+                },
+              });
             }
           })
           .catch((error) => {
             console.error("Failed to delete registration:", error);
-            Swal.fire("Error", "Failed to delete registration", "error");
+            toast.error("Failed to delete registration.", {
+              style: {
+                background: "#0EA5E9",
+                color: "#FFFFFF",
+              },
+            });
           });
       }
     });
   };
 
-  // Close the Modal
+  const handleSearch = () => {
+    if (user) {
+      setLoading(true);
+
+      axios
+        .get("http://localhost:5000/registrations", {
+          params: {
+            email: user.email,
+            search: searchTerm,
+          },
+        })
+        .then((response) => {
+          setRegistrations(response.data);
+        })
+        .catch((error) => {
+          console.error("Failed to fetch registrations:", error);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
+  };
+
   const closeModal = () => {
     document.getElementById("apply_list_modal").close();
     setSelectedRegistration(null);
@@ -117,62 +174,102 @@ const MyApplyList = () => {
 
   return (
     <div className="py-32 flex flex-col items-center">
-      <h2 className="text-2xl font-bold mb-4 text-center text-sky-500">
-        My Apply List
-      </h2>
-      {registrations.length != 0 ? <div className="overflow-x-auto w-11/12">
-        <table className="table-auto w-full border-collapse border border-gray-300">
-          <thead>
-            <tr>
-              <th className="border border-gray-300 px-4 py-2">
-                Marathon Title
-              </th>
-              <th className="border border-gray-300 px-4 py-2">Marathon start Date</th>
-              <th className="border border-gray-300 px-4 py-2">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {registrations.map((reg) => (
-              <tr key={reg._id}>
-                <td className="border text-center border-gray-300 px-4 py-2">
-                  {reg.title}
-                </td>
-                <td className="border text-center border-gray-300 px-4 py-2">
-                  {format(new Date(reg.startDate), "dd-MM-yyyy")}
-                </td>
-                <td className="flex flex-col md:flex-row justify-center gap-1 border border-gray-300 px-4 py-2">
-                  <button
-                    onClick={() => {
-                      setSelectedRegistration(reg);
-                      document.getElementById("apply_list_modal").showModal();
-                    }}
-                    className="btn btn-sm text-sky-500 bg-gray-800"
-                  >
-                    <FiEdit />
-                  </button>
-                  <button
-                    onClick={() => handleDelete(reg._id)}
-                    className="btn btn-sm text-red-500 bg-gray-800"
-                  >
-                    <RiDeleteBinLine />
-                  </button>
-                </td>
+      <div className="w-11/12 flex flex-col md:flex-row-reverse pb-10 items-center justify-between">
+        <div className="flex items-center relative">
+          <input
+            className="text-sky-500 w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
+            type="text"
+            placeholder="Search here..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSearch(); 
+              }
+            }}
+          />
+          <button onClick={handleSearch} className="absolute right-2">
+            <CiSearch size={28} />
+          </button>
+        </div>
+
+        <div>
+          <h2 className="text-2xl font-bold mb-4 text-center text-sky-500 pt-6 md:pl-60">
+            My Apply List
+          </h2>
+        </div>
+        <div></div>
+      </div>
+
+      {registrations.length != 0 ? (
+        <div className="overflow-x-auto w-11/12">
+          <table className="table-auto w-full border-collapse border border-gray-300">
+            <thead className="bg-sky-500 text-gray-800">
+              <tr>
+                <th className="border border-gray-300 px-4 py-2">
+                  Marathon Title
+                </th>
+                <th className="border border-gray-300 px-4 py-2">
+                  Marathon start Date
+                </th>
+                <th className="border border-gray-300 px-4 py-2">Location</th>
+                <th className="border border-gray-300 px-4 py-2">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div> : <div className="h-72 flex items-center text-2xl font-bold text-sky-500">No data found!</div>}
+            </thead>
+            <tbody>
+              {registrations.map((reg) => (
+                <tr key={reg._id}>
+                  <td className="border text-center border-gray-300 px-4 py-2">
+                    {reg.title}
+                  </td>
+                  <td className="border text-center border-gray-300 px-4 py-2">
+                    {format(new Date(reg.startDate), "dd-MM-yyyy")}
+                  </td>
+                  <td className="border text-center border-gray-300 px-4 py-2">
+                    {reg.location}
+                  </td>
+                  <td className="flex flex-col md:flex-row justify-center gap-2 border-t border-gray-300 px-4 py-2">
+                    <button
+                      onClick={() => {
+                        setSelectedRegistration(reg);
+                        document.getElementById("apply_list_modal").showModal();
+                      }}
+                      className="btn btn-sm border-none text-sky-500 dark:bg-gray-800 bg-slate-200"
+                    >
+                      <FiEdit />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(reg._id)}
+                      className="btn btn-sm border-none text-red-500 dark:bg-gray-800 bg-slate-200"
+                    >
+                      <RiDeleteBinLine />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <div className="h-72 flex items-center text-2xl font-bold text-sky-500">
+          No data found!
+        </div>
+      )}
 
       {/* Modal */}
       <dialog id="apply_list_modal" className="modal">
         <div className="modal-box bg-slate-200 dark:bg-gray-800">
-          <h3 className="font-bold text-2xl text-sky-500 text-center mb-6">Update Your Registration</h3>
+          <h3 className="font-bold text-2xl text-sky-500 text-center mb-6">
+            Update Your Registration
+          </h3>
           <form
             onSubmit={(e) => handleUpdate(e)}
             className="flex flex-col gap-4"
           >
             <div>
-              <label className="block text-sm font-medium">Marathon Title</label>
+              <label className="block text-sm font-medium">
+                Marathon Title
+              </label>
               <input
                 type="text"
                 className="text-gray-500 w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
@@ -187,7 +284,10 @@ const MyApplyList = () => {
                 className="text-gray-500 w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
                 value={
                   selectedRegistration?.startDate
-                    ? format(new Date(selectedRegistration.startDate), "dd-MM-yyyy")
+                    ? format(
+                        new Date(selectedRegistration.startDate),
+                        "dd-MM-yyyy"
+                      )
                     : "Invalid Date"
                 }
                 readOnly
@@ -212,7 +312,9 @@ const MyApplyList = () => {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium">Contact Number</label>
+              <label className="block text-sm font-medium">
+                Contact Number
+              </label>
               <input
                 type="text"
                 className="text-sky-500 w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
@@ -234,7 +336,10 @@ const MyApplyList = () => {
               <button type="button" className="btn" onClick={closeModal}>
                 Close
               </button>
-              <button type="submit" className="btn bg-sky-500 text-gray-800 hover:bg-sky-200">
+              <button
+                type="submit"
+                className="btn bg-sky-500 text-gray-800 hover:bg-sky-200"
+              >
                 Update
               </button>
             </div>

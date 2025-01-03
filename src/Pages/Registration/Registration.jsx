@@ -46,6 +46,7 @@ const Registration = () => {
       marathonId: marathon._id,
       title: marathon.title,
       startDate: marathon.startRegistrationDate,
+      location: marathon.location,
       firstName: form.firstName.value,
       lastName: form.lastName.value,
       contactNumber: form.contactNumber.value,
@@ -108,6 +109,14 @@ const Registration = () => {
             <div>
               <input
                 type="text"
+                value={marathon?.location}
+                readOnly
+                className="text-sky-500 w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
+              />
+            </div>
+            <div>
+              <input
+                type="text"
                 value={new Date(
                   marathon?.startRegistrationDate
                 ).toLocaleDateString()}
@@ -151,16 +160,17 @@ const Registration = () => {
                 className="text-sky-500 w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
               />
             </div>
-            <button
-              type="submit"
-              disabled={hasRegistered}
-              className={`btn mt-6 text-gray-800 hover:bg-sky-300 ${
-                hasRegistered ? "bg-gray-400" : "bg-sky-500"
-              } w-full`}
-            >
-              {hasRegistered ? "Already Registered" : "Submit Registration"}
-            </button>
           </div>
+
+          <button
+            type="submit"
+            disabled={hasRegistered}
+            className={`btn mt-6 text-gray-800 hover:bg-sky-300 ${
+              hasRegistered ? "bg-gray-400" : "bg-sky-500"
+            } w-full`}
+          >
+            {hasRegistered ? "Already Registered" : "Submit Registration"}
+          </button>
         </form>
       </div>
     </div>

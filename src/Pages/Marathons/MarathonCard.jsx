@@ -10,6 +10,7 @@ const MarathonCard = ({ marathon }) => {
     marathonImage,
     _id,
     displayName,
+    createdAt
   } = marathon;
 
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const MarathonCard = ({ marathon }) => {
   };
 
   return (
-    <div className="max-w-xs mx-auto bg-slate-200 dark:bg-gray-800 shadow-md rounded-md overflow-hidden hover:border hover:border-sky-500">
+    <div className="max-w-xs mx-auto bg-slate-200 dark:bg-gray-800 shadow-md rounded-md overflow-hidden hover:border hover:border-sky-500 hover:scale-105">
       <img
         src={marathonImage}
         alt={title}
@@ -41,6 +42,7 @@ const MarathonCard = ({ marathon }) => {
           </div>
         )}
         <p className="text-sm text-gray-500">Created By: {displayName}</p>
+        <p className="text-sm text-gray-500 mt-2">Created At: {format(new Date(createdAt), "dd-MM-yyyy")}</p>
         <p className="text-sm text-gray-500 mt-2">Location: {location}</p>
         <div className="text-sm text-gray-500 mt-2">
           <p>

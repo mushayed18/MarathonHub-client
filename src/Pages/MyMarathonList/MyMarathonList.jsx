@@ -1,3 +1,4 @@
+import "../../index.css";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import axios from "axios";
@@ -5,6 +6,7 @@ import Swal from "sweetalert2";
 import Loading from "../../Components/Loading";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBinLine } from "react-icons/ri";
+import toast from "react-hot-toast";
 
 const MyMarathonsList = () => {
   const { user } = useContext(AuthContext);
@@ -45,6 +47,29 @@ const MyMarathonsList = () => {
       description: form.description.value,
     };
 
+    const normalizeDate = (date) => {
+      const newDate = new Date(date);
+      newDate.setHours(0, 0, 0, 0);
+      return newDate;
+    };
+
+    if (
+      new Date(updatedMarathon.endRegistrationDate) <= new Date() ||
+      new Date(updatedMarathon.startDate) <=
+        new Date(updatedMarathon.endRegistrationDate)
+    ) {
+      toast.error(
+        "Please enter a valid date! Registration deadline should be greater than the registration start date! Marathon start date should be greater than the deadline!",
+        {
+          style: {
+            background: "#0EA5E9",
+            color: "#FFFFFF",
+          },
+        }
+      );
+      return;
+    }
+
     axios
       .put(
         `http://localhost:5000/marathons/${selectedMarathon._id}`,
@@ -52,7 +77,15 @@ const MyMarathonsList = () => {
       )
       .then((response) => {
         if (response.data.success) {
-          Swal.fire("Success", "Marathon updated successfully", "success");
+          toast.success(
+            "Your marathon updated successfully",
+            {
+              style: {
+                background: "#0EA5E9",
+                color: "#FFFFFF",
+              },
+            }
+          );
 
           setMarathons((prev) =>
             prev.map((marathon) =>
@@ -64,12 +97,31 @@ const MyMarathonsList = () => {
 
           closeModal();
         } else {
-          Swal.fire("Error", response.data.message, "error");
+          toast.error(
+            "Oops! There is an error. Please try again.",
+            {
+              style: {
+                background: "#0EA5E9",
+                color: "#FFFFFF",
+              },
+            }
+          );
+
+          closeModal();
         }
       })
       .catch((error) => {
-        console.error("Failed to update marathon:", error);
-        Swal.fire("Error", "Failed to update marathon", "error");
+        toast.error(
+          "Oops! There is an error. Please try again.",
+          {
+            style: {
+              background: "#0EA5E9",
+              color: "#FFFFFF",
+            },
+          }
+        );
+
+        closeModal();
       });
   };
 
@@ -79,31 +131,54 @@ const MyMarathonsList = () => {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
+      customClass: {
+        popup: "custom-popup",
+        title: "custom-title",
+        cancelButton: "custom-cancel-button",
+        confirmButton: "custom-confirm-button",
+      },
     }).then((result) => {
       if (result.isConfirmed) {
         axios
           .delete(`http://localhost:5000/marathons/${id}`)
           .then((response) => {
             if (response.data.success) {
-              Swal.fire(
-                "Deleted!",
-                "Your marathon has been deleted.",
-                "success"
-              );
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your marathon has been deleted.",
+                icon: "success",
+                background: "#1F2937",
+                color: "#0EA5E9", 
+                iconColor: "#0EA5E9", 
+                confirmButtonColor: "#0EA5E9", 
+              });              
 
               setMarathons((prev) =>
                 prev.filter((marathon) => marathon._id !== id)
               );
             } else {
-              Swal.fire("Error", response.data.message, "error");
+              toast.error(
+                "Failed to delete marathon.",
+                {
+                  style: {
+                    background: "#0EA5E9",
+                    color: "#FFFFFF",
+                  },
+                }
+              );
             }
           })
           .catch((error) => {
-            console.error("Failed to delete marathon:", error);
-            Swal.fire("Error", "Failed to delete marathon", "error");
+            toast.error(
+              "Failed to delete marathon.",
+              {
+                style: {
+                  background: "#0EA5E9",
+                  color: "#FFFFFF",
+                },
+              }
+            );
           });
       }
     });
@@ -126,7 +201,7 @@ const MyMarathonsList = () => {
       {marathons.length !== 0 ? (
         <div className="overflow-x-auto w-11/12">
           <table className="table-auto w-full border-collapse border border-gray-300">
-            <thead>
+            <thead className="bg-sky-500 text-gray-800">
               <tr>
                 <th className="border border-gray-300 px-4 py-2">Title</th>
                 <th className="border border-gray-300 px-4 py-2">Actions</th>
@@ -144,13 +219,13 @@ const MyMarathonsList = () => {
                         setSelectedMarathon(marathon);
                         document.getElementById("marathon_modal").showModal();
                       }}
-                      className="btn btn-sm text-sky-500 bg-gray-800"
+                      className="btn btn-sm border-none text-sky-500 dark:bg-gray-800 bg-slate-200"
                     >
                       <FiEdit />
                     </button>
                     <button
                       onClick={() => handleDelete(marathon._id)}
-                      className="btn btn-sm text-red-500 bg-gray-800"
+                      className="btn btn-sm border-none text-red-500 dark:bg-gray-800 bg-slate-200"
                     >
                       <RiDeleteBinLine />
                     </button>
@@ -191,7 +266,9 @@ const MyMarathonsList = () => {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium">Marathon start Date</label>
+              <label className="block text-sm font-medium">
+                Marathon start Date
+              </label>
               <input
                 type="date"
                 className="text-sky-500 w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
