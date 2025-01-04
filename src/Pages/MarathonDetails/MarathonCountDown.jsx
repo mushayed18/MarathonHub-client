@@ -20,7 +20,7 @@ const MarathonCountdown = ({ countdownEndDate }) => {
 
   if (remainingTime <= 0) {
     return (
-      <h1 className="text-center text-2xl font-bold text-sky-500">
+      <h1 className="text-center text-2xl font-bold text-sky-500 mt-10">
         The marathon has started!
       </h1>
     );

@@ -15,6 +15,7 @@ import MarathonDetails from "./Pages/MarathonDetails/MarathonDetails.jsx";
 import Registration from "./Pages/Registration/Registration.jsx";
 import MyApplyList from "./Pages/MyApplyList/MyApplyList.jsx";
 import MyMarathonList from "./Pages/MyMarathonList/MyMarathonList.jsx";
+import { HelmetProvider } from "react-helmet-async";
 
 const router = createBrowserRouter([
   {
@@ -65,9 +66,11 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ThemeProvider>
-      <AuthProvider>
-        <RouterProvider router={router} />
-      </AuthProvider>
+      <HelmetProvider>
+        <AuthProvider>
+          <RouterProvider router={router} />
+        </AuthProvider>
+      </HelmetProvider>
     </ThemeProvider>
   </StrictMode>
 );

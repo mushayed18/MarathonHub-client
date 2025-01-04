@@ -6,6 +6,7 @@ import ErrorPage from "../ErrorPage/ErrorPage";
 import { format } from "date-fns";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import MarathonCountdown from "./MarathonCountDown";
+import { Helmet } from "react-helmet-async";
 
 const MarathonDetails = () => {
   const { id } = useParams();
@@ -63,6 +64,9 @@ const MarathonDetails = () => {
 
   return (
     <div className="pt-28 pb-10">
+      <Helmet>
+        <title>Marathon Details | Marathon Hub</title>
+      </Helmet>
       {marathon && (
         <div className="w-full md:max-w-2xl lg:max-w-3xl mx-auto p-6 rounded shadow-2xl backdrop-blur-lg dark:bg-white/30 bg-slate-300">
           <div className="md:flex items-center gap-4">

@@ -8,6 +8,7 @@ import { format } from "date-fns";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import { CiSearch } from "react-icons/ci";
+import { Helmet } from "react-helmet-async";
 
 const MyApplyList = () => {
   const { user } = useContext(AuthContext);
@@ -174,6 +175,9 @@ const MyApplyList = () => {
 
   return (
     <div className="py-32 flex flex-col items-center">
+      <Helmet>
+        <title>My Apply List | Marathon Hub</title>
+      </Helmet>
       <div className="w-11/12 flex flex-col md:flex-row-reverse pb-10 items-center justify-between">
         <div className="flex items-center relative">
           <input
@@ -184,7 +188,7 @@ const MyApplyList = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                handleSearch(); 
+                handleSearch();
               }
             }}
           />

@@ -5,6 +5,7 @@ import { IoEyeOutline } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
   const { signInUser, setUser, signInWithGoogle, loading, setLoading } =
@@ -74,6 +75,9 @@ const Login = () => {
 
   return (
     <div className="flex flex-col md:flex-row justify-center w-11/12 mx-auto">
+      <Helmet>
+        <title>Login | Marathon Hub</title>
+      </Helmet>
       <div className="bg-sky-500 md:w-2/5 lg:w-1/4 mt-28 md:mb-16 md:rounded-l-lg flex items-center justify-center">
         <h1 className="text-3xl font-bold text-white py-4">Login now!</h1>
       </div>

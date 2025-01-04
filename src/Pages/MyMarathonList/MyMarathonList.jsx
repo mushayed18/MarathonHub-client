@@ -7,6 +7,7 @@ import Loading from "../../Components/Loading";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const MyMarathonsList = () => {
   const { user } = useContext(AuthContext);
@@ -77,15 +78,12 @@ const MyMarathonsList = () => {
       )
       .then((response) => {
         if (response.data.success) {
-          toast.success(
-            "Your marathon updated successfully",
-            {
-              style: {
-                background: "#0EA5E9",
-                color: "#FFFFFF",
-              },
-            }
-          );
+          toast.success("Your marathon updated successfully", {
+            style: {
+              background: "#0EA5E9",
+              color: "#FFFFFF",
+            },
+          });
 
           setMarathons((prev) =>
             prev.map((marathon) =>
@@ -97,29 +95,23 @@ const MyMarathonsList = () => {
 
           closeModal();
         } else {
-          toast.error(
-            "Oops! There is an error. Please try again.",
-            {
-              style: {
-                background: "#0EA5E9",
-                color: "#FFFFFF",
-              },
-            }
-          );
+          toast.error("Oops! There is an error. Please try again.", {
+            style: {
+              background: "#0EA5E9",
+              color: "#FFFFFF",
+            },
+          });
 
           closeModal();
         }
       })
       .catch((error) => {
-        toast.error(
-          "Oops! There is an error. Please try again.",
-          {
-            style: {
-              background: "#0EA5E9",
-              color: "#FFFFFF",
-            },
-          }
-        );
+        toast.error("Oops! There is an error. Please try again.", {
+          style: {
+            background: "#0EA5E9",
+            color: "#FFFFFF",
+          },
+        });
 
         closeModal();
       });
@@ -149,36 +141,30 @@ const MyMarathonsList = () => {
                 text: "Your marathon has been deleted.",
                 icon: "success",
                 background: "#1F2937",
-                color: "#0EA5E9", 
-                iconColor: "#0EA5E9", 
-                confirmButtonColor: "#0EA5E9", 
-              });              
+                color: "#0EA5E9",
+                iconColor: "#0EA5E9",
+                confirmButtonColor: "#0EA5E9",
+              });
 
               setMarathons((prev) =>
                 prev.filter((marathon) => marathon._id !== id)
               );
             } else {
-              toast.error(
-                "Failed to delete marathon.",
-                {
-                  style: {
-                    background: "#0EA5E9",
-                    color: "#FFFFFF",
-                  },
-                }
-              );
-            }
-          })
-          .catch((error) => {
-            toast.error(
-              "Failed to delete marathon.",
-              {
+              toast.error("Failed to delete marathon.", {
                 style: {
                   background: "#0EA5E9",
                   color: "#FFFFFF",
                 },
-              }
-            );
+              });
+            }
+          })
+          .catch((error) => {
+            toast.error("Failed to delete marathon.", {
+              style: {
+                background: "#0EA5E9",
+                color: "#FFFFFF",
+              },
+            });
           });
       }
     });
@@ -195,6 +181,9 @@ const MyMarathonsList = () => {
 
   return (
     <div className="py-32 flex flex-col items-center">
+      <Helmet>
+        <title>My Marathon List | Marathon Hub</title>
+      </Helmet>
       <h2 className="text-2xl font-bold mb-4 text-center text-sky-500">
         My Marathons
       </h2>

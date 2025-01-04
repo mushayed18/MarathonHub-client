@@ -160,6 +160,7 @@ import { IoEyeOutline } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const Register = () => {
   const { createUser, updateUserProfile, setUser, signInWithGoogle } =
@@ -202,20 +203,20 @@ const Register = () => {
       });
 
       setUser(newUser);
-      toast.success('User has been created successfully!', {
+      toast.success("User has been created successfully!", {
         style: {
           background: "#0EA5E9",
           color: "#FFFFFF",
         },
-      })
+      });
       navigate("/");
     } catch (error) {
-      toast.error('There is an error, please try again!', {
+      toast.error("There is an error, please try again!", {
         style: {
           background: "#0EA5E9",
           color: "#FFFFFF",
         },
-      })
+      });
       console.error("Error during registration:", error);
     } finally {
       setLocalLoading(false);
@@ -227,20 +228,20 @@ const Register = () => {
       setLocalLoading(true);
       const result = await signInWithGoogle();
       setUser(result.user);
-      toast.success('User has been created successfully!', {
+      toast.success("User has been created successfully!", {
         style: {
           background: "#0EA5E9",
           color: "#FFFFFF",
         },
-      })
+      });
       navigate("/");
     } catch (error) {
-      toast.error('There is an error, please try again!', {
+      toast.error("There is an error, please try again!", {
         style: {
           background: "#0EA5E9",
           color: "#FFFFFF",
         },
-      })
+      });
       console.error("Error during Google sign-in:", error);
     } finally {
       setLocalLoading(false);
@@ -249,6 +250,9 @@ const Register = () => {
 
   return (
     <div className="flex flex-col md:flex-row justify-center w-11/12 mx-auto">
+      <Helmet>
+        <title>Sign up | Marathon Hub</title>
+      </Helmet>
       <div className="bg-sky-500 md:w-2/5 lg:w-1/4 mt-28 md:mb-16 md:rounded-l-lg flex items-center justify-center">
         <h1 className="text-3xl font-bold text-white py-4">Register now!</h1>
       </div>
@@ -324,7 +328,9 @@ const Register = () => {
           <button
             type="button"
             onClick={handleGoogleBtn}
-            className={`btn btn-sm w-full hover:bg-sky-500 ${localLoading ? "cursor-not-allowed" : "hover:bg-sky-500"}`}
+            className={`btn btn-sm w-full hover:bg-sky-500 ${
+              localLoading ? "cursor-not-allowed" : "hover:bg-sky-500"
+            }`}
           >
             Sign up with Google <FcGoogle size={20} />
           </button>

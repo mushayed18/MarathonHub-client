@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const AddMarathon = () => {
   const navigate = useNavigate();
@@ -42,10 +43,9 @@ const AddMarathon = () => {
       email,
     };
 
-
     const normalizeDate = (date) => {
       const newDate = new Date(date);
-      newDate.setHours(0, 0, 0, 0); 
+      newDate.setHours(0, 0, 0, 0);
       return newDate;
     };
 
@@ -54,12 +54,15 @@ const AddMarathon = () => {
       new Date(endRegistrationDate) <= new Date(startRegistrationDate) ||
       new Date(marathonStartDate) <= new Date(endRegistrationDate)
     ) {
-      toast.error("Please enter a valid date! Registration deadline should be greater than the registration start date! Marathon start date should be greater than the deadline!", {
-        style: {
-          background: "#0EA5E9",
-          color: "#FFFFFF",
-        },
-      });
+      toast.error(
+        "Please enter a valid date! Registration deadline should be greater than the registration start date! Marathon start date should be greater than the deadline!",
+        {
+          style: {
+            background: "#0EA5E9",
+            color: "#FFFFFF",
+          },
+        }
+      );
       return;
     }
 
@@ -87,6 +90,9 @@ const AddMarathon = () => {
 
   return (
     <div className="pt-10">
+      <Helmet>
+        <title>Add Marathon | Marathon Hub</title>
+      </Helmet>
       <div className="w-11/12 lg:max-w-3xl md:max-w-2xl mx-auto mb-10 mt-16 p-6 rounded shadow-2xl backdrop-blur-lg dark:bg-white/30 bg-slate-200">
         <h1 className="text-2xl font-bold mb-4 text-center">Add Marathon</h1>
         <form onSubmit={handleAddMarathon} className="space-y-4">

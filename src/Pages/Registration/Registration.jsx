@@ -4,6 +4,7 @@ import axios from "axios";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import Loading from "../../Components/Loading";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const Registration = () => {
   const { id } = useParams();
@@ -84,6 +85,9 @@ const Registration = () => {
 
   return (
     <div className="pt-10">
+      <Helmet>
+        <title>Marathon Registration | Marathon Hub</title>
+      </Helmet>
       <div className="flex flex-col items-center w-11/12 lg:max-w-3xl md:max-w-2xl mx-auto mb-10 mt-16 p-6 rounded shadow-2xl backdrop-blur-lg dark:bg-white/30 bg-slate-300">
         <h1 className="text-center text-3xl font-bold text-sky-500">
           Register for Marathon
