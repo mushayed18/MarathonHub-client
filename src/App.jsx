@@ -3,6 +3,7 @@ import Header from "./Components/Header";
 import { Outlet } from "react-router-dom";
 import Footer from "./Components/Footer";
 import { Toaster } from "react-hot-toast";
+import 'animate.css';
 
 const App = () => {
   return (

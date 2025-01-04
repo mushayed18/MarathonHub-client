@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import SwiperLayout from "./SwiperLayout";
 
 const Home = () => {
   return (
@@ -7,6 +8,8 @@ const Home = () => {
         <title>Home | Marathon Hub</title>
       </Helmet>
       Home page
+
+      <SwiperLayout></SwiperLayout>
     </div>
   );
 };
