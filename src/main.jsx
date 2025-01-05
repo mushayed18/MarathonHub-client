@@ -16,6 +16,8 @@ import Registration from "./Pages/Registration/Registration.jsx";
 import MyApplyList from "./Pages/MyApplyList/MyApplyList.jsx";
 import MyMarathonList from "./Pages/MyMarathonList/MyMarathonList.jsx";
 import { HelmetProvider } from "react-helmet-async";
+import PrivateSign from "./PrivateRoute/PrivateSign.jsx";
+import PrivateRoute from "./PrivateRoute/PrivateRoute.jsx";
 
 const router = createBrowserRouter([
   {
@@ -29,35 +31,35 @@ const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <Login></Login>,
+        element: <PrivateSign><Login></Login></PrivateSign>,
       },
       {
         path: "/register",
-        element: <Register></Register>,
+        element: <PrivateSign><Register></Register></PrivateSign>,
       },
       {
         path: "/add-marathon",
-        element: <AddMarathon></AddMarathon>,
+        element: <PrivateRoute><AddMarathon></AddMarathon></PrivateRoute>,
       },
       {
         path: "/marathons",
-        element: <Marathons></Marathons>,
+        element: <PrivateRoute><Marathons></Marathons></PrivateRoute>,
       },
       {
         path: "/marathons/:id",
-        element: <MarathonDetails></MarathonDetails>,
+        element: <PrivateRoute><MarathonDetails></MarathonDetails></PrivateRoute>,
       },
       {
         path: "/marathons/:id/register",
-        element: <Registration></Registration>,
+        element: <PrivateRoute><Registration></Registration></PrivateRoute>,
       },
       {
         path: "/my-apply-list",
-        element: <MyApplyList></MyApplyList>,
+        element: <PrivateRoute><MyApplyList></MyApplyList></PrivateRoute>,
       },
       {
         path: "/my-marathon-list",
-        element: <MyMarathonList></MyMarathonList>,
+        element: <PrivateRoute><MyMarathonList></MyMarathonList></PrivateRoute>,
       },
     ],
   },

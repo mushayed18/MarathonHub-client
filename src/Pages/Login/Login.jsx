@@ -74,7 +74,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row justify-center w-11/12 mx-auto">
+    <div className="animate__animated animate__fadeInDown flex flex-col md:flex-row justify-center w-11/12 mx-auto">
       <Helmet>
         <title>Login | Marathon Hub</title>
       </Helmet>

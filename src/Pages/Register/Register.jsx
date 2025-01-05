@@ -249,7 +249,7 @@ const Register = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row justify-center w-11/12 mx-auto">
+    <div className="animate__animated animate__fadeInUp flex flex-col md:flex-row justify-center w-11/12 mx-auto">
       <Helmet>
         <title>Sign up | Marathon Hub</title>
       </Helmet>

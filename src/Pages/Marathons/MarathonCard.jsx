@@ -20,7 +20,7 @@ const MarathonCard = ({ marathon }) => {
   };
 
   return (
-    <div className="max-w-xs mx-auto bg-slate-200 dark:bg-gray-800 shadow-md rounded-md overflow-hidden hover:border hover:border-sky-500 hover:scale-105">
+    <div data-aos="fade-up" className="max-w-xs mx-auto bg-slate-200 dark:bg-gray-800 shadow-md overflow-hidden hover:border hover:border-sky-500 hover:scale-105">
       <img
         src={marathonImage}
         alt={title}

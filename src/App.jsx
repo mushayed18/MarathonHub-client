@@ -5,6 +5,12 @@ import Footer from "./Components/Footer";
 import { Toaster } from "react-hot-toast";
 import 'animate.css';
 
+import AOS from "aos";
+import "aos/dist/aos.css"; 
+
+AOS.init(); 
+
+
 const App = () => {
   return (
     <div className="font-poppins min-h-screen bg-slate-100 text-black dark:bg-gray-900 dark:text-white">

@@ -93,7 +93,7 @@ const AddMarathon = () => {
       <Helmet>
         <title>Add Marathon | Marathon Hub</title>
       </Helmet>
-      <div className="w-11/12 lg:max-w-3xl md:max-w-2xl mx-auto mb-10 mt-16 p-6 rounded shadow-2xl backdrop-blur-lg dark:bg-white/30 bg-slate-200">
+      <div className="animate__animated animate__fadeInDown w-11/12 lg:max-w-3xl md:max-w-2xl mx-auto mb-10 mt-16 p-6 rounded shadow-2xl backdrop-blur-lg dark:bg-white/30 bg-slate-200">
         <h1 className="text-2xl font-bold mb-4 text-center">Add Marathon</h1>
         <form onSubmit={handleAddMarathon} className="space-y-4">
           <div>

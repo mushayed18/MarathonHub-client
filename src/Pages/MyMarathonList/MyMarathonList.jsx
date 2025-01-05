@@ -199,10 +199,10 @@ const MyMarathonsList = () => {
             <tbody>
               {marathons.map((marathon, index) => (
                 <tr key={marathon._id}>
-                  <td className="border text-center border-gray-300 px-4 py-2">
+                  <td className="bg-slate-400 dark:bg-gray-900 border text-center border-gray-300 px-4 py-2">
                     {marathon.title}
                   </td>
-                  <td className="flex flex-col md:flex-row justify-center gap-1 border border-gray-300 px-4 py-2">
+                  <td className="bg-slate-400 dark:bg-gray-900 flex flex-col md:flex-row justify-center gap-1 border border-gray-300 px-4 py-2">
                     <button
                       onClick={() => {
                         setSelectedMarathon(marathon);

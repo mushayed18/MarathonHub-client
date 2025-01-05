@@ -22,7 +22,7 @@ const SwiperLayout = () => {
   };
 
   return (
-    <div className="w-full mx-auto h-[35rem] mt-14">
+    <div className="w-full mx-auto h-[37rem] mt-14">
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
@@ -37,13 +37,13 @@ const SwiperLayout = () => {
       >
         <SwiperSlide>
           <img
-            className="w-full h-[35rem] object-cover"
+            className="w-full h-[37rem] object-cover"
             src={business}
             alt="Business Marathon"
           />
           <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center">
             <h2
-              className={`text-white text-5xl md:text-8xl font-bold text-center px-4 animate__animated ${
+              className={`text-gray-400 text-5xl md:text-8xl font-bold text-center px-4 animate__animated ${
                 activeSlide === 0 ? "animate__fadeInDown" : ""
               }`}
             >
@@ -60,13 +60,13 @@ const SwiperLayout = () => {
         </SwiperSlide>
         <SwiperSlide>
           <img
-            className="w-full h-[35rem] object-cover"
+            className="w-full h-[37rem] object-cover"
             src={coding}
             alt="Coding Marathon"
           />
           <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center">
             <h2
-              className={`text-white text-5xl md:text-8xl font-bold text-center px-4 animate__animated ${
+              className={`text-gray-400 text-5xl md:text-8xl font-bold text-center px-4 animate__animated ${
                 activeSlide === 1 ? "animate__fadeInDown" : ""
               }`}
             >
@@ -83,13 +83,13 @@ const SwiperLayout = () => {
         </SwiperSlide>
         <SwiperSlide>
           <img
-            className="w-full h-[35rem] object-cover"
+            className="w-full h-[37rem] object-cover"
             src={creative}
             alt="Creative Marathon"
           />
           <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center">
             <h2
-              className={`text-white text-5xl md:text-8xl font-bold text-center px-4 animate__animated ${
+              className={`text-gray-400 text-5xl md:text-8xl font-bold text-center px-4 animate__animated ${
                 activeSlide === 2 ? "animate__fadeInDown" : ""
               }`}
             >
@@ -106,13 +106,13 @@ const SwiperLayout = () => {
         </SwiperSlide>
         <SwiperSlide>
           <img
-            className="w-full h-[35rem] object-cover"
+            className="w-full h-[37rem] object-cover"
             src={donate}
             alt="Donate Marathon"
           />
           <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center">
             <h2
-              className={`text-white text-5xl md:text-8xl font-bold text-center px-4 animate__animated ${
+              className={`text-gray-400 text-5xl md:text-8xl font-bold text-center px-4 animate__animated ${
                 activeSlide === 3 ? "animate__fadeInDown" : ""
               }`}
             >

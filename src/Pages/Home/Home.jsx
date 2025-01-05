@@ -1,5 +1,9 @@
 import { Helmet } from "react-helmet-async";
 import SwiperLayout from "./SwiperLayout";
+import RandomMarathons from "./RandomMarathons";
+import UpcomingMarathons from "./UpcomingMarathons";
+import UserExperience from "./UserExperience";
+import Partnership from "./Partnership";
 
 const Home = () => {
   return (
@@ -7,9 +11,11 @@ const Home = () => {
       <Helmet>
         <title>Home | Marathon Hub</title>
       </Helmet>
-      Home page
-
-      <SwiperLayout></SwiperLayout>
+      <SwiperLayout />
+      <RandomMarathons />
+      <UpcomingMarathons />
+      <UserExperience />
+      <Partnership />
     </div>
   );
 };

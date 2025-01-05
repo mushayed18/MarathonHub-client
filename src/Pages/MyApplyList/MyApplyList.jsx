@@ -223,16 +223,16 @@ const MyApplyList = () => {
             <tbody>
               {registrations.map((reg) => (
                 <tr key={reg._id}>
-                  <td className="border text-center border-gray-300 px-4 py-2">
+                  <td className="bg-slate-400 dark:bg-gray-900 border text-center border-gray-300 px-4 py-2">
                     {reg.title}
                   </td>
-                  <td className="border text-center border-gray-300 px-4 py-2">
+                  <td className="bg-slate-400 dark:bg-gray-900 border text-center border-gray-300 px-4 py-2">
                     {format(new Date(reg.startDate), "dd-MM-yyyy")}
                   </td>
-                  <td className="border text-center border-gray-300 px-4 py-2">
+                  <td className="bg-slate-400 dark:bg-gray-900 border text-center border-gray-300 px-4 py-2">
                     {reg.location}
                   </td>
-                  <td className="flex flex-col md:flex-row justify-center gap-2 border-t border-gray-300 px-4 py-2">
+                  <td className="bg-slate-400 dark:bg-gray-900 flex flex-col md:flex-row justify-center gap-2 border-t border-gray-300 px-4 py-2">
                     <button
                       onClick={() => {
                         setSelectedRegistration(reg);
