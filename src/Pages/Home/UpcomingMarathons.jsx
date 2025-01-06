@@ -9,11 +9,12 @@ const UpcomingMarathons = () => {
     const fetchMarathons = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/upcoming-marathons"
+          "https://marathon-hub-server-two.vercel.app/upcoming-marathons"
         );
         setMarathons(response.data);
       } catch (error) {
-        console.error("Error fetching marathons:", error);
+        {
+        }
       }
     };
 

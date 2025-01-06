@@ -7,6 +7,7 @@ import { format } from "date-fns";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import MarathonCountdown from "./MarathonCountDown";
 import { Helmet } from "react-helmet-async";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const MarathonDetails = () => {
   const { id } = useParams();
@@ -19,12 +20,12 @@ const MarathonDetails = () => {
 
   const navigate = useNavigate();
 
+  const axiosSecure = useAxiosSecure();
+
   useEffect(() => {
     const fetchMarathonDetails = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/marathons/${id}`
-        );
+        const response = await axiosSecure.get(`/marathons/${id}`)
         setMarathon(response.data);
         setIsLoading(false);
       } catch (err) {
@@ -38,8 +39,8 @@ const MarathonDetails = () => {
 
   useEffect(() => {
     if (user) {
-      axios
-        .get(`http://localhost:5000/registrations/${user.email}`)
+      axiosSecure
+        .get(`/registrations/${user.email}`)
         .then((response) => {
           const alreadyRegistered = response.data.some(
             (reg) => reg.marathonId === id

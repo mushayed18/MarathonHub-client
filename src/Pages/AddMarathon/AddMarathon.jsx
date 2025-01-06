@@ -68,11 +68,10 @@ const AddMarathon = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/marathons",
+        "https://marathon-hub-server-two.vercel.app/marathons",
         marathonData
       );
       if (response.data.insertedId) {
-        console.log("Marathon added successfully:", response.data);
         toast.success("Event added successfully!", {
           style: {
             background: "#0EA5E9",
@@ -80,11 +79,10 @@ const AddMarathon = () => {
           },
         });
         navigate("/marathons");
-      } else {
-        console.error("Failed to add marathon:", response.data);
       }
     } catch (error) {
-      console.error("Error adding marathon:", error);
+      {
+      }
     }
   };
 

@@ -5,6 +5,7 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 import Loading from "../../Components/Loading";
 import toast from "react-hot-toast";
 import { Helmet } from "react-helmet-async";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const Registration = () => {
   const { id } = useParams();
@@ -15,8 +16,10 @@ const Registration = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [hasRegistered, setHasRegistered] = useState(false);
 
+  const axiosSecure = useAxiosSecure();
+
   useEffect(() => {
-    axios.get(`http://localhost:5000/marathons/${id}`).then((response) => {
+    axiosSecure.get(`/marathons/${id}`).then((response) => {
       setMarathon(response.data);
       setIsLoading(false);
     });
@@ -24,8 +27,8 @@ const Registration = () => {
 
   useEffect(() => {
     if (user) {
-      axios
-        .get(`http://localhost:5000/registrations/${user.email}`)
+      axiosSecure
+        .get(`/registrations/${user.email}`)
         .then((response) => {
           const alreadyRegistered = response.data.some(
             (reg) => reg.marathonId === id
@@ -56,7 +59,7 @@ const Registration = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/registrations",
+        "https://marathon-hub-server-two.vercel.app/registrations",
         registrationData
       );
 

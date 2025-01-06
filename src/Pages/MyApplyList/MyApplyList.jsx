@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import { CiSearch } from "react-icons/ci";
 import { Helmet } from "react-helmet-async";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const MyApplyList = () => {
   const { user } = useContext(AuthContext);
@@ -17,16 +18,17 @@ const MyApplyList = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
 
+  const axiosSecure = useAxiosSecure();
+
   useEffect(() => {
     if (user) {
-      axios
-        .get(`http://localhost:5000/registrations?email=${user.email}`)
+      axiosSecure
+        .get(`/registrations?email=${user.email}`)
         .then((response) => {
           setRegistrations(response.data);
           setLoading(false);
         })
         .catch((error) => {
-          console.error("Failed to fetch registrations:", error);
           setLoading(false);
         });
     }
@@ -49,7 +51,7 @@ const MyApplyList = () => {
 
     axios
       .put(
-        `http://localhost:5000/registrations/${selectedRegistration._id}`,
+        `https://marathon-hub-server-two.vercel.app/registrations/${selectedRegistration._id}`,
         updatedRegistration
       )
       .then((response) => {
@@ -109,7 +111,9 @@ const MyApplyList = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:5000/registrations/${id}`)
+          .delete(
+            `https://marathon-hub-server-two.vercel.app/registrations/${id}`
+          )
           .then((response) => {
             if (response.data.success) {
               Swal.fire({
@@ -133,7 +137,6 @@ const MyApplyList = () => {
             }
           })
           .catch((error) => {
-            console.error("Failed to delete registration:", error);
             toast.error("Failed to delete registration.", {
               style: {
                 background: "#0EA5E9",
@@ -149,8 +152,8 @@ const MyApplyList = () => {
     if (user) {
       setLoading(true);
 
-      axios
-        .get("http://localhost:5000/registrations", {
+      axiosSecure
+        .get(`/registrations`, {
           params: {
             email: user.email,
             search: searchTerm,
@@ -158,9 +161,6 @@ const MyApplyList = () => {
         })
         .then((response) => {
           setRegistrations(response.data);
-        })
-        .catch((error) => {
-          console.error("Failed to fetch registrations:", error);
         })
         .finally(() => {
           setLoading(false);
@@ -192,7 +192,10 @@ const MyApplyList = () => {
               }
             }}
           />
-          <button onClick={handleSearch} className="absolute right-2">
+          <button
+            onClick={handleSearch}
+            className="absolute right-2 text-sky-500"
+          >
             <CiSearch size={28} />
           </button>
         </div>

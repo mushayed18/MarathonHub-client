@@ -8,10 +8,13 @@ const RandomMarathons = () => {
   useEffect(() => {
     const fetchMarathons = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/random-marathons");
-        setMarathons(response.data); 
+        const response = await axios.get(
+          "https://marathon-hub-server-two.vercel.app/random-marathons"
+        );
+        setMarathons(response.data);
       } catch (error) {
-        console.error("Error fetching marathons:", error);
+        {
+        }
       }
     };
 

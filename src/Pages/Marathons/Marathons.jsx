@@ -4,16 +4,20 @@ import MarathonCard from "./MarathonCard";
 import Loading from "../../Components/Loading";
 import { Helmet } from "react-helmet-async";
 import { TbAdjustments } from "react-icons/tb";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const Marathons = () => {
   const [marathons, setMarathons] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [sortOrder, setSortOrder] = useState("asc"); 
+  const [sortOrder, setSortOrder] = useState("asc");
+
+  const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
     setIsLoading(true);
-    axios
-      .get(`http://localhost:5000/marathons?sort=${sortOrder}`)
+
+    axiosSecure
+      .get(`/marathons?sort=${sortOrder}`)
       .then((response) => {
         setMarathons(response.data);
         setIsLoading(false);
@@ -21,7 +25,7 @@ const Marathons = () => {
       .catch((err) => {
         setIsLoading(false);
       });
-  }, [sortOrder]); 
+  }, [sortOrder]);
 
   if (isLoading) {
     return <Loading></Loading>;
@@ -35,7 +39,9 @@ const Marathons = () => {
       <div className="w-11/12 flex flex-col-reverse md:flex-row gap-5 justify-between items-center">
         <div></div>
         <div>
-          <h1 className="pl-0 md:pl-40 text-3xl font-bold text-sky-500">All Marathons</h1>
+          <h1 className="pl-0 md:pl-40 text-3xl font-bold text-sky-500">
+            All Marathons
+          </h1>
         </div>
         <div>
           <button

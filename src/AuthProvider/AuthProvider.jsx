@@ -1,6 +1,16 @@
-import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+  updateProfile,
+} from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import { auth } from "../firebase/firebase.config";
+import axios from "axios";
 
 export const AuthContext = createContext(null);
 
@@ -11,7 +21,7 @@ const AuthProvider = ({ children }) => {
 
   const [loading, setLoading] = useState(true);
 
-  const [gmailAddress, setGmailAddress] = useState('');
+  const [gmailAddress, setGmailAddress] = useState("");
 
   const createUser = (email, password) => {
     setLoading(true);
@@ -23,37 +33,60 @@ const AuthProvider = ({ children }) => {
   const updateUserProfile = (updatedData) => {
     setLoading(true);
     return updateProfile(auth.currentUser, updatedData);
-  }
+  };
 
   const signOutUser = () => {
     setLoading(true);
     return signOut(auth);
-  }
+  };
 
   const signInUser = (email, password) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password).finally(() =>
       setLoading(false)
     );
-  }
+  };
 
   const signInWithGoogle = () => {
     return signInWithPopup(auth, googleProvider);
-  }
+  };
 
   const resetPassword = (email) => {
     return sendPasswordResetEmail(auth, email);
-  }
-  
+  };
+
   useEffect(() => {
     const unsubsribe = onAuthStateChanged(auth, (currentUser) => {
-        setUser(currentUser);
-        setLoading(false);
+      setUser(currentUser);
+
+      if (currentUser?.email) {
+        const user = { email: currentUser.email };
+
+        axios
+          .post("https://marathon-hub-server-two.vercel.app/jwt", user, {
+            withCredentials: true,
+          })
+          .then((res) => {
+            setLoading(false);
+          });
+      } else {
+        axios
+          .post(
+            "https://marathon-hub-server-two.vercel.app/logout",
+            {},
+            {
+              withCredentials: true,
+            }
+          )
+          .then((res) => {
+            setLoading(false);
+          });
+      }
     });
 
     return () => {
-        unsubsribe();
-    }
+      unsubsribe();
+    };
   }, []);
 
   const authInfo = {
@@ -68,7 +101,7 @@ const AuthProvider = ({ children }) => {
     setGmailAddress,
     resetPassword,
     loading,
-    setLoading
+    setLoading,
   };
 
   return (

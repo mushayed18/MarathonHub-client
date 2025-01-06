@@ -42,7 +42,6 @@ const Login = () => {
           color: "#FFFFFF",
         },
       });
-      console.error("Login error:", error.message);
     } finally {
       setLoading(false);
     }
@@ -67,7 +66,6 @@ const Login = () => {
           color: "#FFFFFF",
         },
       });
-      console.error("Google login error:", error.message);
     } finally {
       setLoading(false);
     }

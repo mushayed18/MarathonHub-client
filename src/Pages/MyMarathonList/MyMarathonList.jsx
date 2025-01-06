@@ -8,6 +8,7 @@ import { FiEdit } from "react-icons/fi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import toast from "react-hot-toast";
 import { Helmet } from "react-helmet-async";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const MyMarathonsList = () => {
   const { user } = useContext(AuthContext);
@@ -15,16 +16,17 @@ const MyMarathonsList = () => {
   const [loading, setLoading] = useState(true);
   const [selectedMarathon, setSelectedMarathon] = useState(null);
 
+  const axiosSecure = useAxiosSecure();
+
   useEffect(() => {
     if (user) {
-      axios
-        .get(`http://localhost:5000/my-marathons?email=${user.email}`)
+      axiosSecure
+        .get(`/my-marathons?email=${user.email}`)
         .then((response) => {
           setMarathons(response.data.marathons);
           setLoading(false);
         })
         .catch((error) => {
-          console.error("Failed to fetch marathons:", error);
           setLoading(false);
         });
     }
@@ -73,7 +75,7 @@ const MyMarathonsList = () => {
 
     axios
       .put(
-        `http://localhost:5000/marathons/${selectedMarathon._id}`,
+        `https://marathon-hub-server-two.vercel.app/marathons/${selectedMarathon._id}`,
         updatedMarathon
       )
       .then((response) => {
@@ -133,7 +135,7 @@ const MyMarathonsList = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:5000/marathons/${id}`)
+          .delete(`https://marathon-hub-server-two.vercel.app/marathons/${id}`)
           .then((response) => {
             if (response.data.success) {
               Swal.fire({
