@@ -22,7 +22,7 @@ const SwiperLayout = () => {
   };
 
   return (
-    <div className="w-full mx-auto h-[37rem] mt-14">
+    <div className="w-full mx-auto h-[38rem] md:h-[43rem] mt-14">
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
@@ -37,7 +37,7 @@ const SwiperLayout = () => {
       >
         <SwiperSlide>
           <img
-            className="w-full h-[37rem] object-cover"
+            className="w-full h-[38rem] md:h-[43rem] object-cover"
             src={business}
             alt="Business Marathon"
           />
@@ -60,7 +60,7 @@ const SwiperLayout = () => {
         </SwiperSlide>
         <SwiperSlide>
           <img
-            className="w-full h-[37rem] object-cover"
+            className="w-full h-[38rem] md:h-[43rem] object-cover"
             src={coding}
             alt="Coding Marathon"
           />
@@ -83,7 +83,7 @@ const SwiperLayout = () => {
         </SwiperSlide>
         <SwiperSlide>
           <img
-            className="w-full h-[37rem] object-cover"
+            className="w-full h-[38rem] md:h-[43rem] object-cover"
             src={creative}
             alt="Creative Marathon"
           />
@@ -106,7 +106,7 @@ const SwiperLayout = () => {
         </SwiperSlide>
         <SwiperSlide>
           <img
-            className="w-full h-[37rem] object-cover"
+            className="w-full h-[38rem] md:h-[43rem] object-cover"
             src={donate}
             alt="Donate Marathon"
           />

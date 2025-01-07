@@ -25,7 +25,7 @@ const MarathonDetails = () => {
   useEffect(() => {
     const fetchMarathonDetails = async () => {
       try {
-        const response = await axiosSecure.get(`/marathons/${id}`)
+        const response = await axiosSecure.get(`/marathons/${id}`);
         setMarathon(response.data);
         setIsLoading(false);
       } catch (err) {
@@ -75,7 +75,7 @@ const MarathonDetails = () => {
               <img
                 src={marathon.marathonImage}
                 alt={marathon.title}
-                className="w-full rounded mb-4"
+                className="w-full h-60 object-cover rounded mb-4"
               />
             </div>
             <div className="w-full md:w-1/2 flex flex-col justify-center gap-2">
@@ -124,11 +124,13 @@ const MarathonDetails = () => {
                   {hasRegistered ? "Already Registered" : "Register"}
                 </button>
               ) : new Date() <= new Date(marathon.startRegistrationDate) ? (
-                <p className="text-pink-500">
+                <p className="hidden md:block text-pink-500">
                   The registration has not started yet!
                 </p>
               ) : (
-                <p className="mt-4 text-red-500">Registration is closed.</p>
+                <p className="hidden md:block mt-4 text-red-500">
+                  Registration is closed.
+                </p>
               )}
             </div>
           </div>
@@ -136,12 +138,24 @@ const MarathonDetails = () => {
           <div className="flex flex-col items-center gap-2 mt-4">
             <p className="text-2xl font-bold text-sky-500">Description</p>
             <p>{marathon.description}</p>
-            <button
-              className="md:hidden w-full btn bg-sky-500 text-gray-800 hover:bg-sky-300"
-              onClick={() => navigate(`/marathons/${marathon._id}/register`)}
-            >
-              {hasRegistered ? "Already Registered" : "Register"}
-            </button>
+
+            {new Date() >= new Date(marathon.startRegistrationDate) &&
+            new Date() <= new Date(marathon.endRegistrationDate) ? (
+              <button
+                className="md:hidden w-full btn bg-sky-500 text-gray-800 hover:bg-sky-300"
+                onClick={() => navigate(`/marathons/${marathon._id}/register`)}
+              >
+                {hasRegistered ? "Already Registered" : "Register"}
+              </button>
+            ) : new Date() <= new Date(marathon.startRegistrationDate) ? (
+              <p className="md:hidden text-pink-500">
+                The registration has not started yet!
+              </p>
+            ) : (
+              <p className="md:hidden mt-4 text-red-500">
+                Registration is closed.
+              </p>
+            )}
           </div>
         </div>
       )}
