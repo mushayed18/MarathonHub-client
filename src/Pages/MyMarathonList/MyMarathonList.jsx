@@ -263,7 +263,7 @@ const MyMarathonsList = () => {
               <input
                 type="date"
                 className="text-sky-500 w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
-                defaultValue={selectedMarathon?.startDate?.split("T")[0] || ""}
+                defaultValue={selectedMarathon?.marathonStartDate?.split("T")[0] || ""}
                 name="startDate"
               />
             </div>
