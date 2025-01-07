@@ -1,6 +1,6 @@
 # Marathon Hub
 
-Live Site URL: [Marathon Hub](https://marathon-hub-d6162.web.app)
+Live Site URL: https://marathon-hub-d6162.web.app/
 
 ## About the Project
 Marathon Hub is a comprehensive platform designed to streamline marathon event management. It connects event organizers with participants, making it easier to create, manage, and participate in marathons. The platform ensures an intuitive experience for both organizers and participants.
