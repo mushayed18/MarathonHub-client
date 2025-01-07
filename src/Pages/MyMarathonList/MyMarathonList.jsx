@@ -39,8 +39,8 @@ const MyMarathonsList = () => {
     const updatedMarathon = {
       title: form.title.value,
       location: form.location.value,
-      startDate: form.startDate.value
-        ? new Date(form.startDate.value).toISOString()
+      marathonStartDate: form.marathonStartDate.value
+        ? new Date(form.marathonStartDate.value).toISOString()
         : null,
       endRegistrationDate: form.endRegistrationDate.value
         ? new Date(form.endRegistrationDate.value).toISOString()
@@ -58,7 +58,7 @@ const MyMarathonsList = () => {
 
     if (
       new Date(updatedMarathon.endRegistrationDate) <= new Date() ||
-      new Date(updatedMarathon.startDate) <=
+      new Date(updatedMarathon.marathonStartDate) <=
         new Date(updatedMarathon.endRegistrationDate)
     ) {
       toast.error(
@@ -264,7 +264,7 @@ const MyMarathonsList = () => {
                 type="date"
                 className="text-sky-500 w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-sky-500"
                 defaultValue={selectedMarathon?.marathonStartDate?.split("T")[0] || ""}
-                name="startDate"
+                name="marathonStartDate"
               />
             </div>
             <div>
