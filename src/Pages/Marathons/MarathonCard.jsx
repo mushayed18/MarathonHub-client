@@ -24,7 +24,7 @@ const MarathonCard = ({ marathon }) => {
       <img
         src={marathonImage}
         alt={title}
-        className="w-full h-56 object-cover"
+        className="w-80 h-56 object-cover"
       />
       <div className="p-4">
         <h3 className="text-lg font-semibold">{title}</h3>
