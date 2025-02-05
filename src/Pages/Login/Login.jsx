@@ -28,7 +28,7 @@ const Login = () => {
       setLoading(true);
       const result = await signInUser(email, password);
       setUser(result.user);
-      toast.success("Login successful!", {
+      toast.success("Login successful!!", {
         style: {
           background: "#0EA5E9",
           color: "#FFFFFF",
