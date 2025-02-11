@@ -18,6 +18,7 @@ import MyMarathonList from "./Pages/MyMarathonList/MyMarathonList.jsx";
 import { HelmetProvider } from "react-helmet-async";
 import PrivateSign from "./PrivateRoute/PrivateSign.jsx";
 import PrivateRoute from "./PrivateRoute/PrivateRoute.jsx";
+import About from "./Pages/About/About.jsx";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
+      },
+      {
+        path: "/about",
+        element: <About></About>,
       },
       {
         path: "/login",
@@ -43,7 +48,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/marathons",
-        element: <PrivateRoute><Marathons></Marathons></PrivateRoute>,
+        element: <Marathons></Marathons>,
       },
       {
         path: "/marathons/:id",

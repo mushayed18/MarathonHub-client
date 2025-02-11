@@ -34,6 +34,7 @@ const Header = () => {
   const navbar = (
     <>
       <NavLink to="/">Home</NavLink>
+      <NavLink to="/about">About</NavLink>
       <NavLink to="/marathons">Marathons</NavLink>
 
       {user && user?.email && (
