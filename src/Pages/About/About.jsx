@@ -82,7 +82,7 @@ const About = () => {
             <div className="border-2 h-12 w-12 rounded-full flex items-center justify-center text-sky-500">
               <MdOutlineMail />
             </div>
-            <p>marathonhub@gmail.com</p>
+            <p>marathonHub@gmail.com</p>
           </div>
         </div>
       </div>
