@@ -154,7 +154,7 @@ const Header = () => {
             <span className="hidden md:block">
               <button
                 onClick={handleRegister}
-                className="btn btn-sm bg-sky-500 text-black hover:bg-sky-300"
+                className="btn btn-sm btn-outline border text-black dark:text-white hover:bg-sky-500"
               >
                 Register
               </button>

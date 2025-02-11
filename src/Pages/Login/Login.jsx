@@ -18,6 +18,30 @@ const Login = () => {
     setVisibility(!visibility);
   };
 
+  const handleDemoUserBtn = async () => {
+    try {
+      setLoading(true);
+      const result = await signInUser('virat18@gmail.com', 'Virat18');
+      setUser(result.user);
+      toast.success("Login successful!!", {
+        style: {
+          background: "#0EA5E9",
+          color: "#FFFFFF",
+        },
+      });
+      navigate("/");
+    } catch (error) {
+      toast.error("There is an error. Please try again!", {
+        style: {
+          background: "#0EA5E9",
+          color: "#FFFFFF",
+        },
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -142,6 +166,16 @@ const Login = () => {
             }`}
           >
             Login with Google <FcGoogle size={20} />
+          </button>
+
+          <button
+            type="button"
+            onClick={handleDemoUserBtn}
+            className={`btn btn-sm rounded-none text-black bg-sky-500 w-full ${
+              loading ? "cursor-not-allowed" : "hover:bg-sky-300"
+            }`}
+          >
+            Demo User
           </button>
         </form>
         <p className="mt-4 text-sm text-center">
