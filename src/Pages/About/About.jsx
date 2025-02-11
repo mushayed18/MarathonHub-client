@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom";
+import { FaPhoneAlt } from "react-icons/fa";
 
 import marathon1 from "../../assets/marathon1.jpg";
 import marathon2 from "../../assets/marathon2.png";
 import marathon3 from "../../assets/marathon3.jpg";
 import marathon4 from "../../assets/marathon4.png";
+import { MdOutlineMail } from "react-icons/md";
 
 const About = () => {
   const navigate = useNavigate();
@@ -26,28 +28,28 @@ const About = () => {
           <img
             src={marathon1}
             alt="Marathon event"
-            className="rounded-lg shadow-lg"
+            className="rounded-lg shadow-lg h-56 w-full object-cover"
           />
         </div>
         <div className="mt-6 flex justify-center">
           <img
             src={marathon2}
             alt="Marathon event"
-            className="rounded-lg shadow-lg"
+            className="rounded-lg shadow-lg h-56 w-full object-cover"
           />
         </div>
         <div className="mt-6 flex justify-center">
           <img
             src={marathon3}
             alt="Marathon event"
-            className="rounded-lg shadow-lg"
+            className="rounded-lg shadow-lg h-56 w-full object-cover"
           />
         </div>
         <div className="mt-6 flex justify-center">
           <img
             src={marathon4}
             alt="Marathon event"
-            className="rounded-lg shadow-lg object-cover"
+            className="rounded-lg shadow-lg h-56 w-full object-cover"
           />
         </div>
       </div>
@@ -63,6 +65,26 @@ const About = () => {
         >
           Explore Events
         </button>
+      </div>
+
+      <div className="border-2 rounded-lg flex flex-col md:flex-row my-20">
+        <div className="w-full md:w-1/2 flex items-center justify-center bg-sky-500">
+          <h1 className="font-bold text-2xl text-black">Contact Us</h1>
+        </div>
+        <div className="w-full md:w-1/2 flex flex-col justify-center p-9 gap-6">
+          <div className="flex items-center gap-4">
+            <div className="border-2 h-12 w-12 rounded-full flex items-center justify-center text-sky-500">
+              <FaPhoneAlt />
+            </div>
+            <p>0123456789</p>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="border-2 h-12 w-12 rounded-full flex items-center justify-center text-sky-500">
+              <MdOutlineMail />
+            </div>
+            <p>marathonhub@gmail.com</p>
+          </div>
+        </div>
       </div>
     </div>
   );
