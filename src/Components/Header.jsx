@@ -87,7 +87,7 @@ const Header = () => {
         theme === "dark" ? "bg-gray-800" : "bg-slate-200"
       }`}
     >
-      <div className="w-11/12 mx-auto flex items-center justify-between py-4">
+      <div className="w-11/12 lg:max-w-[1440px] mx-auto flex items-center justify-between py-4">
         <div className="flex items-center gap-2">
           <div
             className="lg:hidden cursor-pointer"
