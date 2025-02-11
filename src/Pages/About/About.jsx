@@ -15,7 +15,7 @@ const About = () => {
   return (
     <div className="max-w-3xl mx-auto p-6 text-center pt-28">
       <h1 className="text-4xl font-bold mb-6 text-sky-500">About Us</h1>
-      <p className="text-lg text-white leading-relaxed">
+      <p className="text-lg dark:text-white text-black leading-relaxed">
         MarathonHub is a platform designed to connect runners with marathon
         events worldwide. Whether you're a seasoned athlete or a first-time
         runner, MarathonHub makes it easy to find, register, and track marathon
@@ -51,7 +51,7 @@ const About = () => {
           />
         </div>
       </div>
-      <p className="mt-6 text-white text-lg">
+      <p className="mt-6 dark:text-white text-black text-lg">
         Our mission is to promote a healthy lifestyle and bring together a
         community of passionate runners. Join us and take on your next
         challenge!
