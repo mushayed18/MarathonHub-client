@@ -41,7 +41,7 @@ const SwiperLayout = () => {
             src={business}
             alt="Business Marathon"
           />
-          <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center">
+          <div className="absolute inset-0 bg-black bg-opacity-75 flex flex-col items-center justify-center">
             <h2
               className={`text-gray-400 text-5xl md:text-8xl font-bold text-center px-4 animate__animated ${
                 activeSlide === 0 ? "animate__fadeInDown" : ""
@@ -64,7 +64,7 @@ const SwiperLayout = () => {
             src={coding}
             alt="Coding Marathon"
           />
-          <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center">
+          <div className="absolute inset-0 bg-black bg-opacity-75 flex flex-col items-center justify-center">
             <h2
               className={`text-gray-400 text-5xl md:text-8xl font-bold text-center px-4 animate__animated ${
                 activeSlide === 1 ? "animate__fadeInDown" : ""
@@ -87,7 +87,7 @@ const SwiperLayout = () => {
             src={creative}
             alt="Creative Marathon"
           />
-          <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center">
+          <div className="absolute inset-0 bg-black bg-opacity-75 flex flex-col items-center justify-center">
             <h2
               className={`text-gray-400 text-5xl md:text-8xl font-bold text-center px-4 animate__animated ${
                 activeSlide === 2 ? "animate__fadeInDown" : ""
@@ -110,7 +110,7 @@ const SwiperLayout = () => {
             src={donate}
             alt="Donate Marathon"
           />
-          <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center">
+          <div className="absolute inset-0 bg-black bg-opacity-75 flex flex-col items-center justify-center">
             <h2
               className={`text-gray-400 text-5xl md:text-8xl font-bold text-center px-4 animate__animated ${
                 activeSlide === 3 ? "animate__fadeInDown" : ""

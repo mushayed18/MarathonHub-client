@@ -43,19 +43,6 @@ const MarathonCard = ({ marathon }) => {
         )}
         <p className="text-sm text-gray-500">Created By: {displayName}</p>
         <p className="text-sm text-gray-500 mt-2">Created At: {format(new Date(createdAt), "dd-MM-yyyy")}</p>
-        <p className="text-sm text-gray-500 mt-2">Location: {location}</p>
-        <div className="text-sm text-gray-500 mt-2">
-          <p>
-            Registration:{" "}
-            <span className="text-sky-500">
-              {format(new Date(startRegistrationDate), "dd-MM-yyyy")}
-            </span>
-            -
-            <span className="text-sky-500">
-              {format(new Date(endRegistrationDate), "dd-MM-yyyy")}
-            </span>
-          </p>
-        </div>
         <button
           onClick={() => seeDetails(_id)}
           className="btn w-full bg-sky-500 text-gray-800 hover:bg-sky-300 mt-4"
