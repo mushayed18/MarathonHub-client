@@ -143,7 +143,7 @@ const Login = () => {
 
           <button
             type="submit"
-            className={`btn btn-sm w-full ${
+            className={`btn btn-sm btn-outline rounded-none dark:text-white text-black w-full ${
               loading ? "cursor-not-allowed" : "hover:bg-sky-500"
             }`}
           >
@@ -161,7 +161,7 @@ const Login = () => {
           <button
             type="button"
             onClick={handleGoogleBtn}
-            className={`btn btn-sm w-full ${
+            className={`btn btn-sm btn-outline rounded-none dark:text-white text-black bg-none w-full ${
               loading ? "cursor-not-allowed" : "hover:bg-sky-500"
             }`}
           >

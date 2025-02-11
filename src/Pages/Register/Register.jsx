@@ -157,7 +157,7 @@ const Register = () => {
             </button>
           </div>
 
-          <button type="submit" className="btn btn-sm hover:bg-sky-500 w-full">
+          <button type="submit" className="btn btn-sm btn-outline rounded-none dark:text-white text-black hover:bg-sky-500 w-full">
             {localLoading ? (
               <span className="flex items-center justify-center text-sky-500 cursor-not-allowed">
                 Wait a moment...
@@ -171,7 +171,7 @@ const Register = () => {
           <button
             type="button"
             onClick={handleGoogleBtn}
-            className={`btn btn-sm w-full hover:bg-sky-500 ${
+            className={`btn btn-sm btn-outline rounded-none dark:text-white text-black w-full hover:bg-sky-500 ${
               localLoading ? "cursor-not-allowed" : "hover:bg-sky-500"
             }`}
           >
